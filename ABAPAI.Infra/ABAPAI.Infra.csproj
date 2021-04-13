@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ABAPAI.Domain\ABAPAI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
