@@ -7,7 +7,7 @@ namespace ABAPAI.Domain.Entities
         #region Contructor
 
         //Create
-        public Staff(string name_user, string name, string email, string password, string role, string cPF, string cNPJ, int stateRegistration, bool free)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int stateRegistration, bool free)
         {
             Name_user = name_user;
             Name = name;
@@ -19,20 +19,25 @@ namespace ABAPAI.Domain.Entities
             StateRegistration = stateRegistration;
             Free = free;
         }
-
+        
         //ALL
-        public Staff(string name_user, string name, string email, string password, string role, string cPF, string cNPJ, int stateRegistration, bool free, string description, int dDD, string phone, string image, string address, string city, string postal_code, string country, int number) : this(name_user, name, email, password, role, cPF, cNPJ, stateRegistration, free)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image, AddressTemplate addressTemplate)
         {
+            Name_user = name_user;
+            Name = name;
+            Email = email;
+            Password = password;
+            Role = role;
+            CPF = cPF;
+            CNPJ = cNPJ;
+            StateRegistration = stateRegistration;
+            Free = free;
             Description = description;
             DDD = dDD;
             Phone = phone;
             Image = image;
-            Address = address;
-            City = city;
-            Postal_code = postal_code;
-            Country = country;
-            Number = number;
-        }
+            this.addressTemplate = addressTemplate;
+        }      
 
         #endregion
 
@@ -79,10 +84,7 @@ namespace ABAPAI.Domain.Entities
         public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone, AddressTemplate template)
         {
 
-            if (image.IsValid())
-            {
-                this.Image = image;
-            }
+            
             if (name.IsValid())
             {
                 this.Name = name;

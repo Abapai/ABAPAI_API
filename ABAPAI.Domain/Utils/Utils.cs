@@ -17,5 +17,10 @@ namespace ABAPAI.Domain.Utils
                 return true;
             }
         }
+
+        public static string Hash(this string email,string senha)
+        {
+            return "hash";
+        }
     }
 }

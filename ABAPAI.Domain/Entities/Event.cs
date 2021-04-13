@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ABAPAI.Domain.Entities
 {
-    class Event
+    public class Event
     {
     }
 }
