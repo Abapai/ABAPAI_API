@@ -21,7 +21,7 @@ namespace ABAPAI.Domain.Entities
         }
         
         //ALL
-        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image, AddressTemplate addressTemplate)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image)
         {
             Name_user = name_user;
             Name = name;
@@ -36,7 +36,7 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
-            this.addressTemplate = addressTemplate;
+           
         }      
 
         #endregion
@@ -71,17 +71,16 @@ namespace ABAPAI.Domain.Entities
 
         public string Phone { get; private set; }
 
-        public string Image { get; private set; }                          
-        
-        public AddressTemplate addressTemplate { get; private set; }
-
-            #endregion
+        public string Image { get; private set; }
 
         #endregion
 
+        #endregion
+        public virtual AddressTemplate Address { get; set; }
+
         #region Methods
 
-        public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone, AddressTemplate template)
+        public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone)
         {
 
             
@@ -104,11 +103,7 @@ namespace ABAPAI.Domain.Entities
             if (phone.IsValid())
             {
                 this.Phone = phone;
-            }
-            if (template.IsValid())
-            {
-                addressTemplate.UpdateAddress(template);
-            }            
+            }        
             
         }
 
