@@ -1,9 +1,8 @@
-﻿using ABAPAI.Domain.Entities;
+﻿
+using ABAPAI.Domain.Entities;
 using ABAPAI.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Infra.Contexts
 {

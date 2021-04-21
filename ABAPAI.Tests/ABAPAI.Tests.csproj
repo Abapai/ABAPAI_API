@@ -21,4 +21,8 @@
     <Folder Include="QueryTests\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ABAPAI.Domain\ABAPAI.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
