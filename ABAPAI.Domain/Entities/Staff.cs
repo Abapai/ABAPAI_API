@@ -19,7 +19,7 @@ namespace ABAPAI.Domain.Entities
             StateRegistration = stateRegistration;
             Free = free;
         }
-        
+
         //ALL
         public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image, AddressTemplate addressTemplate)
         {
@@ -36,8 +36,13 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
+<<<<<<< Updated upstream
             this.addressTemplate = addressTemplate;
         }      
+=======
+
+        }
+>>>>>>> Stashed changes
 
         #endregion
 
@@ -64,7 +69,7 @@ namespace ABAPAI.Domain.Entities
 
         #endregion
 
-            #region Not Require
+        #region Not Require
         public string Description { get; private set; }
 
         public string DDD { get; private set; }
@@ -81,10 +86,14 @@ namespace ABAPAI.Domain.Entities
 
         #region Methods
 
+<<<<<<< Updated upstream
         public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone, AddressTemplate template)
+=======
+        public void updateStaff(string name_user, string description, string name, string image, string ddd, string phone)
+>>>>>>> Stashed changes
         {
 
-            
+
             if (name.IsValid())
             {
                 this.Name = name;
@@ -96,7 +105,7 @@ namespace ABAPAI.Domain.Entities
             if (description.IsValid())
             {
                 this.Description = description;
-            }            
+            }
             if (ddd.IsValid())
             {
                 this.DDD = ddd;
@@ -105,17 +114,21 @@ namespace ABAPAI.Domain.Entities
             {
                 this.Phone = phone;
             }
+<<<<<<< Updated upstream
             if (template.IsValid())
             {
                 addressTemplate.UpdateAddress(template);
             }            
             
+=======
+
+>>>>>>> Stashed changes
         }
 
         public void resetPassword(string password)
         {
-             this.Password = password;
-           
+            this.Password = password;
+
         }
 
         public void changeImage(string image)
@@ -124,7 +137,7 @@ namespace ABAPAI.Domain.Entities
         }
 
         #endregion
-                
+
 
     }
 }
