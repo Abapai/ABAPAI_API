@@ -19,9 +19,9 @@ namespace ABAPAI.Domain.Entities
             StateRegistration = stateRegistration;
             Free = free;
         }
-
+        
         //ALL
-        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image, AddressTemplate addressTemplate)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image)
         {
             Name_user = name_user;
             Name = name;
@@ -36,13 +36,8 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
-<<<<<<< Updated upstream
-            this.addressTemplate = addressTemplate;
+           
         }      
-=======
-
-        }
->>>>>>> Stashed changes
 
         #endregion
 
@@ -69,31 +64,26 @@ namespace ABAPAI.Domain.Entities
 
         #endregion
 
-        #region Not Require
+            #region Not Require
         public string Description { get; private set; }
 
         public string DDD { get; private set; }
 
         public string Phone { get; private set; }
 
-        public string Image { get; private set; }                          
-        
-        public AddressTemplate addressTemplate { get; private set; }
-
-            #endregion
+        public string Image { get; private set; }
 
         #endregion
 
+        #endregion
+        public virtual AddressTemplate Address { get; set; }
+
         #region Methods
 
-<<<<<<< Updated upstream
-        public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone, AddressTemplate template)
-=======
-        public void updateStaff(string name_user, string description, string name, string image, string ddd, string phone)
->>>>>>> Stashed changes
+        public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone)
         {
 
-
+            
             if (name.IsValid())
             {
                 this.Name = name;
@@ -105,7 +95,7 @@ namespace ABAPAI.Domain.Entities
             if (description.IsValid())
             {
                 this.Description = description;
-            }
+            }            
             if (ddd.IsValid())
             {
                 this.DDD = ddd;
@@ -113,22 +103,14 @@ namespace ABAPAI.Domain.Entities
             if (phone.IsValid())
             {
                 this.Phone = phone;
-            }
-<<<<<<< Updated upstream
-            if (template.IsValid())
-            {
-                addressTemplate.UpdateAddress(template);
-            }            
+            }        
             
-=======
-
->>>>>>> Stashed changes
         }
 
         public void resetPassword(string password)
         {
-            this.Password = password;
-
+             this.Password = password;
+           
         }
 
         public void changeImage(string image)
@@ -137,7 +119,7 @@ namespace ABAPAI.Domain.Entities
         }
 
         #endregion
-
+                
 
     }
 }

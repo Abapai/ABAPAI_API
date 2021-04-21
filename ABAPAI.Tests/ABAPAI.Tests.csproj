@@ -13,17 +13,12 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
-<<<<<<< Updated upstream
-=======
   <ItemGroup>
     <Folder Include="CommandTests\" />
     <Folder Include="EntityTests\" />
+    <Folder Include="HandlerTests\" />
+    <Folder Include="Repositories\" />
     <Folder Include="QueryTests\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ABAPAI.Domain\ABAPAI.Domain.csproj" />
-  </ItemGroup>
-
->>>>>>> Stashed changes
 </Project>

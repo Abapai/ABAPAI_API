@@ -7,15 +7,19 @@ namespace ABAPAI.Domain.Entities
 {
     public class AddressTemplate
     {
-        public AddressTemplate(string address, string city, string postal_code, string country, int? number)
+        public AddressTemplate(string address, string city, string postal_code, string country, int? number,Guid id_user)
         {
             Address = address;
             City = city;
             Postal_code = postal_code;
             Country = country;
             Number = number;
+            Id_address = Guid.NewGuid();
+            Id_user = id_user;
+
         }
 
+        public Guid Id_address { get; private set; }
         public string Address { get; private set; }
         public string City { get; private set; }
         public string Postal_code { get; private set; }
@@ -46,6 +50,8 @@ namespace ABAPAI.Domain.Entities
             }
         }
         
+        public Guid Id_user { get;private set; }
+        public virtual Staff Staff { get; private set; }
 
     }
 }

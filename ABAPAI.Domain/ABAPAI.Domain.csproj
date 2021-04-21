@@ -6,16 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< Updated upstream
     <Folder Include="Interfaces\Repositories\" />
-=======
+    <Folder Include="Commands\" />
+    <Folder Include="Handlers\" />
     <Folder Include="Repositories\" />
     <Folder Include="Queries\" />
->>>>>>> Stashed changes
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Flunt" Version="1.0.4" />
   </ItemGroup>
 
 </Project>
