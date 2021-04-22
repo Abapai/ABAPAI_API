@@ -34,13 +34,28 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            var staff = new Staff(command.name_user,command.name,command.email,command.password,Roles.FAN,command.CPF,null,0,false);
+
+
+            var staff = new Staff(
+                command.name_user,
+                command.name,
+                command.email,
+                command.password,
+                Roles.FAN,
+                command.CPF,
+                null,
+                0,
+                false);
+            
+            staff.hashPassword();
+
 
             var id = _staffRepository.Create(staff);
 
             return new GenericCommandResult(
                     true,
-                    "Staff criado com sucesso!"                  
+                    "Staff criado com sucesso!",
+                    new { identificador = id}
                     );
         }
 

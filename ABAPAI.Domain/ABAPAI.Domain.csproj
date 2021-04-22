@@ -9,6 +9,7 @@
     <Folder Include="Interfaces\Repositories\" />
     <Folder Include="Commands\" />
     <Folder Include="Handlers\" />
+    <Folder Include="NovaPasta\" />
     <Folder Include="Repositories\" />
     <Folder Include="Queries\" />
   </ItemGroup>

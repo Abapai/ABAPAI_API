@@ -24,7 +24,7 @@ namespace ABAPAI.Infra.Contexts
             modelBuilder.Entity<Staff>().Property(x => x.Name).HasColumnType("varchar(100)").IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.Email).HasColumnType("varchar(100)").IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.Password).HasColumnType("varchar(100)").IsRequired();
-            modelBuilder.Entity<Staff>().Property(x => x.Role).HasConversion(x => x.ToString(), x => (Roles)Enum.Parse(typeof(Roles), x));
+            modelBuilder.Entity<Staff>().Property(x => x.Role).HasConversion(x => x.ToString(), x => (Roles)Enum.Parse(typeof(Roles), x)).IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.CPF).HasColumnType("varchar(255)");
             modelBuilder.Entity<Staff>().Property(x => x.CNPJ).HasColumnType("varchar(255)");
             modelBuilder.Entity<Staff>().Property(x => x.StateRegistration).HasColumnType("varchar(9)");
