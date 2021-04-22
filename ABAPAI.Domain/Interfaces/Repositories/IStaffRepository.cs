@@ -7,6 +7,6 @@ namespace ABAPAI.Domain.Interfaces.Repositories
 {
     public interface IStaffRepository
     {
-        Guid Create(Staff staff);
+        void Create(Staff staff);
     }
 }

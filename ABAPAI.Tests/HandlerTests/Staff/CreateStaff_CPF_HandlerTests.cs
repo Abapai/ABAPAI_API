@@ -11,11 +11,11 @@ namespace ABAPAI.Tests.HandlerTests.Staff
 {
 
     [TestClass]
-    public class CreateStaffHandlerTests
+    public class CreateStaff_CPF_HandlerTests
     {
         private readonly StaffHandler _staffHandler = new StaffHandler(new FakeStaffRepository());
-        private readonly CreateStaffCommand _createStaffCommand_invalid = new CreateStaffCommand("abnerm80@gmail.com", "abner_math", "abner matheus", "senha", "senhasenha", "09025225663");
-        private readonly CreateStaffCommand _createStaffCommand_valid = new CreateStaffCommand("abnerm80@gmail.com", "abner_math", "abner matheus", "senha", "senha", "090.253.256-63");
+        private readonly CreateStaff_CPF_Command _createStaffCommand_invalid = new CreateStaff_CPF_Command("abnerm80@gmail.com", "abner_math", "abner matheus", "senha", "senhasenha", "09025225663");
+        private readonly CreateStaff_CPF_Command _createStaffCommand_valid = new CreateStaff_CPF_Command("abnerm80@gmail.com", "abner_math", "abner matheus", "senha", "senha", "090.253.256-63");
         private GenericCommandResult _result;
 
         [TestMethod]

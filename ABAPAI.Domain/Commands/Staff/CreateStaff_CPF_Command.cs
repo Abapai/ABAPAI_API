@@ -7,9 +7,13 @@ using System.Text;
 
 namespace ABAPAI.Domain.Commands.Staff
 {
-    public class CreateStaffCommand : Notifiable, ICommand
+    public class CreateStaff_CPF_Command : Notifiable, ICommand
     {
-        public CreateStaffCommand(string email, string name_user, string name, string password, string confirmpassword, string cPF)
+        public CreateStaff_CPF_Command()
+        {
+        }
+
+        public CreateStaff_CPF_Command(string email, string name_user, string name, string password, string confirmpassword, string cPF)
         {
             this.email = email;
             this.name_user = name_user;

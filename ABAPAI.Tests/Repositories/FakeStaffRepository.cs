@@ -8,9 +8,9 @@ namespace ABAPAI.Tests.Repositories
 {
     public class FakeStaffRepository : IStaffRepository
     {
-        public Guid Create(Staff staff)
+        public void Create(Staff staff)
         {
-            return Guid.NewGuid();
+            
         }
     }
 }
