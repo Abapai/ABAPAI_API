@@ -80,31 +80,9 @@ namespace ABAPAI.Domain.Entities
 
         #region Methods
 
-        public void updateStaff(string name_user,string description,string name,string image, string ddd, string phone)
+        public void hashPassword()
         {
-
-            
-            if (name.IsValid())
-            {
-                this.Name = name;
-            }
-            if (name_user.IsValid())
-            {
-                this.Name_user = name_user;
-            }
-            if (description.IsValid())
-            {
-                this.Description = description;
-            }            
-            if (ddd.IsValid())
-            {
-                this.DDD = ddd;
-            }
-            if (phone.IsValid())
-            {
-                this.Phone = phone;
-            }        
-            
+            this.Password = this.Password.GetHash();
         }
 
         public void resetPassword(string password)
