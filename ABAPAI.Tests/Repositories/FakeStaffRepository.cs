@@ -16,7 +16,7 @@ namespace ABAPAI.Tests.Repositories
 
         public bool ExistName_user(string name_user)
         {
-            return true;
+            return false;
         }
     }
 }
