@@ -16,6 +16,7 @@ namespace ABAPAI.API.Controllers
     {
         
         [HttpPost]
+        [Route("cpf")]
         public async Task<ActionResult<GenericCommandResult>> Create_staff_CPF(
             [FromBody]CreateStaff_CPF_Command command,
             [FromServices] StaffHandler staffHandler)
@@ -24,6 +25,17 @@ namespace ABAPAI.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("cnpj")]
+        public async Task<ActionResult<GenericCommandResult>> Create_staff_CNPJ(
+            [FromBody] CreateStaff_CNPJ_Command command,
+            [FromServices] StaffHandler staffHandler)
+        {
+            var result = (GenericCommandResult)staffHandler.Handle(command);
+            return Ok(result);
+        }
+
+        [Route("cpf")]
         public string  Get()
           
         {
