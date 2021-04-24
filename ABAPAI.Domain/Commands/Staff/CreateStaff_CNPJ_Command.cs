@@ -14,7 +14,7 @@ namespace ABAPAI.Domain.Commands.Staff
         {
         }
 
-        public CreateStaff_CNPJ_Command(string email, string name_user, string name, string password, string confirmpassword, string cNPJ, int? stateRegistration, bool free)
+        public CreateStaff_CNPJ_Command(string email, string name_user, string name, string password, string confirmpassword, string cNPJ, string stateRegistration, bool free)
         {
             this.email = email;
             this.name_user = name_user;
@@ -34,7 +34,7 @@ namespace ABAPAI.Domain.Commands.Staff
         public string confirmpassword { get; set; }
 
         public string CNPJ { get; set; }
-        public int? StateRegistration { get; set; }
+        public string StateRegistration { get; set; }
         public bool Free { get; set; }
 
         public void Validate()
@@ -44,7 +44,7 @@ namespace ABAPAI.Domain.Commands.Staff
                 .Requires()
                 .IsEmailOrEmpty(email, "email", "E-mail inválido.")
                 .HasLen(CNPJ,18, "CNPJ", $"CNPJ Inválido.")
-                .IfNotNull( StateRegistration==null?"":null,z=>z.IsTrue(Free,"Free","Se não for ISENTO, é necessário o preenchimento da StateRegistration"))
+                .IfNotNull(StateRegistration==null?"":null,z=>z.IsTrue(Free,"Free","Se não for ISENTO, é necessário o preenchimento da StateRegistration"))
                 .IfNotNull(StateRegistration,x=> x.IsFalse(Free,"Free", "Free tem que estar false, já que contém StateRegistration"))
                 .IsNotNull(Free, "Free","Free não pode estar nulo.")
                 .IsNotNullOrEmpty(name, "Name", "Name não pode estar nulo.")

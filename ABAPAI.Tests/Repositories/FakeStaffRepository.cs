@@ -3,6 +3,7 @@ using ABAPAI.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ABAPAI.Tests.Repositories
 {
@@ -11,6 +12,11 @@ namespace ABAPAI.Tests.Repositories
         public void Create(Staff staff)
         {
             
+        }
+
+        public bool ExistName_user(string name_user)
+        {
+            return true;
         }
     }
 }

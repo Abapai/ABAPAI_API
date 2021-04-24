@@ -31,7 +31,7 @@ namespace ABAPAI.Tests.HandlerTests.Staff
             "senha",
             "senha",
             "104.239.797/0118-46",
-            111,
+            "836.199.259.310",
             true
             );
         private readonly CreateStaff_CNPJ_Command _createStaffCommand_valid = new CreateStaff_CNPJ_Command(
@@ -47,18 +47,18 @@ namespace ABAPAI.Tests.HandlerTests.Staff
         private GenericCommandResult _result;
 
         [TestMethod]
-        public void dado_um_staff_invalido_deve_interroper_execucao()
+        public  void dado_um_staff_invalido_deve_interroper_execucao()
         {
-            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_invalid);
+            _result = (GenericCommandResult)  _staffHandler.Handle(_createStaffCommand_invalid);
             Assert.AreEqual(_result.Success, false);
-            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_invalid2);
+            _result = (GenericCommandResult)  _staffHandler.Handle(_createStaffCommand_invalid2);
             Assert.AreEqual(_result.Success, false);
         }
 
         [TestMethod]
-        public void dado_um_staff_valido_deve_cadastrar()
+        public  void dado_um_staff_valido_deve_cadastrar()
         {
-            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_valid);
+            _result = (GenericCommandResult)  _staffHandler.Handle(_createStaffCommand_valid);
             Assert.AreEqual(_result.Success, true);
         }
     }
