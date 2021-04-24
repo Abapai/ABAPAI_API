@@ -13,7 +13,8 @@ using System.Text;
 namespace ABAPAI.Domain.Handlers
 {
     public class StaffHandler : Notifiable,
-        IHandler<CreateStaff_CPF_Command>
+        IHandler<CreateStaff_CPF_Command>,
+        IHandler<CreateStaff_CNPJ_Command>
     {
         private IStaffRepository _staffRepository;
 
@@ -54,11 +55,48 @@ namespace ABAPAI.Domain.Handlers
 
             return new GenericCommandResult(
                     true,
-                    "Staff criado com sucesso!",
+                    $"Staff {staff.Name} criado com sucesso!",
                     new { identificador = staff.Id}
                     );
         }
 
-        
+        public ICommandResult Handle(CreateStaff_CNPJ_Command command)
+        {
+            command.Validate();
+            if (command.Invalid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Staff não criada, operação inválida",
+                    command.Notifications
+                    );
+            }
+
+            var staff = new Staff(
+                command.name_user,
+                command.name,
+                command.email,
+                command.password,
+                Roles.FAN,
+                null,
+                command.CNPJ,
+                command.StateRegistration,
+                command.Free,
+                null,
+                null,
+                null,
+                null
+                );
+
+            staff.hashPassword();
+
+            _staffRepository.Create(staff);
+
+            return new GenericCommandResult(
+                    true,
+                    $"Staff {staff.Name} criado com sucesso!",
+                    new { identificador = staff.Id }
+                    );
+        }
     }
 }
