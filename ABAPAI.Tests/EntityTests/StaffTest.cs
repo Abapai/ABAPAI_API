@@ -12,7 +12,7 @@ namespace ABAPAI.Tests.EntityTests
     public class StaffTest
     {
 
-        private readonly Staff staff = new Staff("abner_math", "name", "abnerm80@gmail.com", "abner123", Roles.STAFF, "09025325864",null,0, false);
+        private readonly Staff staff = new Staff("abner_math", "name", "abnerm80@gmail.com", "abner123", Roles.STAFF, "09025325864",null,null, false);
         
         [TestMethod]
         public void Ao_gerar_um_staff_valido_quando_executar_metodo_hashPassword_deve_gerar_um_hash()

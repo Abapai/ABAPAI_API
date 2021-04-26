@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Interfaces.Repositories
 {
     public interface IStaffRepository
     {
-        Guid Create(Staff staff);
+        void Create(Staff staff);
+
+        bool ExistName_user(string name_user);
     }
 }

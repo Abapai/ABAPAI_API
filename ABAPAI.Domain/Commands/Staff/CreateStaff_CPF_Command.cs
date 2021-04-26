@@ -7,9 +7,13 @@ using System.Text;
 
 namespace ABAPAI.Domain.Commands.Staff
 {
-    public class CreateStaffCommand : Notifiable, ICommand
+    public class CreateStaff_CPF_Command : Notifiable, ICommand
     {
-        public CreateStaffCommand(string email, string name_user, string name, string password, string confirmpassword, string cPF)
+        public CreateStaff_CPF_Command()
+        {
+        }
+
+        public CreateStaff_CPF_Command(string email, string name_user, string name, string password, string confirmpassword, string cPF)
         {
             this.email = email;
             this.name_user = name_user;
@@ -32,13 +36,13 @@ namespace ABAPAI.Domain.Commands.Staff
             AddNotifications(
                 new Contract()
                 .Requires()
-                .IsEmail(email,"email","E-mail inválido.")                
+                .IsEmailOrEmpty(email,"email","E-mail inválido.")                
                 .HasLen(CPF,14,"CPF","CPF Inválido.")
-                .IsNotNull(name,"Name","Name não pode estar nulo.")
-                .IsNotNull(name_user,"Name_user","Name não pode estar nulo.")
+                .IsNotNullOrEmpty(name,"Name","Name não pode estar nulo.")
+                .IsNotNullOrEmpty(name_user,"Name_user","Name não pode estar nulo.")
                 .AreEquals(password,confirmpassword,"Password","Password deve ser igual a Confirmpassword.")
-                .IsNotNull(password,"Password","Password não pode estar nulo.")
-                .IsNotNull(password, "Confirmpassword", "Confirmpassword não pode estar nulo.")
+                .IsNotNullOrEmpty(password,"Password","Password não pode estar nulo.")
+                .IsNotNullOrEmpty(password, "Confirmpassword", "Confirmpassword não pode estar nulo.")
                 );
         }
     }

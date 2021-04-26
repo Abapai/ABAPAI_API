@@ -27,7 +27,7 @@ namespace ABAPAI.Infra.Contexts
             modelBuilder.Entity<Staff>().Property(x => x.Role).HasConversion(x => x.ToString(), x => (Roles)Enum.Parse(typeof(Roles), x)).IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.CPF).HasColumnType("varchar(255)");
             modelBuilder.Entity<Staff>().Property(x => x.CNPJ).HasColumnType("varchar(255)");
-            modelBuilder.Entity<Staff>().Property(x => x.StateRegistration).HasColumnType("varchar(9)");
+            modelBuilder.Entity<Staff>().Property(x => x.StateRegistration).HasColumnType("varchar(20)");
             modelBuilder.Entity<Staff>().Property(x => x.Description).HasColumnType("varchar(200)");
             modelBuilder.Entity<Staff>().Property(x => x.DDD).HasColumnType("varchar(3)");
             modelBuilder.Entity<Staff>().Property(x => x.Phone).HasColumnType("varchar(10)");

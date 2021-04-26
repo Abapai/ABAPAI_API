@@ -3,14 +3,20 @@ using ABAPAI.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ABAPAI.Tests.Repositories
 {
     public class FakeStaffRepository : IStaffRepository
     {
-        public Guid Create(Staff staff)
+        public void Create(Staff staff)
         {
-            return Guid.NewGuid();
+            
+        }
+
+        public bool ExistName_user(string name_user)
+        {
+            return false;
         }
     }
 }

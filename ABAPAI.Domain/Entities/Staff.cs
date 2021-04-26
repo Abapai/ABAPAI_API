@@ -7,7 +7,7 @@ namespace ABAPAI.Domain.Entities
         #region Contructor
 
         //Create
-        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int stateRegistration, bool free)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, string stateRegistration, bool free)
         {
             Name_user = name_user;
             Name = name;
@@ -21,7 +21,7 @@ namespace ABAPAI.Domain.Entities
         }
         
         //ALL
-        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, int? stateRegistration, bool? free, string description, string dDD, string phone, string image)
+        public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, string stateRegistration, bool? free, string description, string dDD, string phone, string image)
         {
             Name_user = name_user;
             Name = name;
@@ -58,7 +58,7 @@ namespace ABAPAI.Domain.Entities
 
         public string CNPJ { get; private set; }
 
-        public int? StateRegistration { get; private set; }
+        public string StateRegistration { get; private set; }
 
         public bool? Free { get; private set; }
 
