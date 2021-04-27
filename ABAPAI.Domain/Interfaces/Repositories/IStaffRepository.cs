@@ -10,6 +10,8 @@ namespace ABAPAI.Domain.Interfaces.Repositories
     {
         void Create(Staff staff);
 
+        bool ExistName_user(string name_user,string email,string cpf_cnpj);
+
         bool ExistName_user(string name_user);
     }
 }

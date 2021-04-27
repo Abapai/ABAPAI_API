@@ -23,9 +23,14 @@ namespace ABAPAI.Infra.Repositories
             await _dataContext.SaveChangesAsync();            
         }
 
+        public bool ExistName_user(string name_user,string email,string cpf_cnpj)
+        {
+            return _dataContext.Staff.Any(x => x.Name_user == name_user || x.Name == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj);
+        }
+
         public bool ExistName_user(string name_user)
         {
-            return _dataContext.Staff.Any(x => x.Name_user == name_user);
+           return _dataContext.Staff.Any(x => x.Name_user == name_user );
         }
     }
 }

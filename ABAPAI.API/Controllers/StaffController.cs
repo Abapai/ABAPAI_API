@@ -37,7 +37,7 @@ namespace ABAPAI.API.Controllers
             var result = (GenericCommandResult) staffHandler.Handle(command);
             if (result.Success)
             {
-                return Ok(result);
+                return Created("",result);
             }
 
             return BadRequest(result);

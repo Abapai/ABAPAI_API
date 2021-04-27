@@ -9,9 +9,15 @@ namespace ABAPAI.Tests.Repositories
 {
     public class FakeStaffRepository : IStaffRepository
     {
+
         public void Create(Staff staff)
         {
             
+        }
+
+        public bool ExistName_user(string name_user, string email, string cpf_cnpj)
+        {
+            return false;
         }
 
         public bool ExistName_user(string name_user)

@@ -37,10 +37,10 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user);
+            bool existUserName = _staffRepository.ExistName_user(command.name_user,command.email,command.CPF);
             if (existUserName)
             {
-                command.AddNotification("Name_user", "Já existe usuário com este name_user");
+                command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
                 return new GenericCommandResult(
                     false,
                     "Staff não criada, operação inválida",
@@ -85,10 +85,10 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user);
+            bool existUserName = _staffRepository.ExistName_user(command.name_user,command.email,command.CNPJ);
             if (existUserName)
             {
-                command.AddNotification("Name_user", "Já existe usuário com este name_user");
+                command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
                 return new GenericCommandResult(
                     false,
                     "Staff não criada, operação inválida",
