@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ABAPAI.Tests.HandlerTests.Staff
+namespace ABAPAI.Tests.HandlerTests
 {
     [TestClass]
     public class CreateStaff_CNPJ_HandlerTests 

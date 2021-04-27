@@ -153,7 +153,7 @@ namespace ABAPAI.Domain.Handlers
             return new GenericCommandResult(
                 true,
                 "Autenticação feita com sucesso.",
-                new { id = token, name = staff.Email }
+                token
                 );
 
         }

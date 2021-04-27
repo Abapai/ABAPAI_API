@@ -44,7 +44,7 @@ namespace ABAPAI.Domain.Utils
         public static string GetJWTStaff(string id, Roles role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("tokensecreto");
+            var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
