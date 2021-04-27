@@ -27,5 +27,10 @@ namespace ABAPAI.Infra.Repositories
         {
             return _dataContext.Staff.Any(x => x.Name_user == name_user);
         }
+
+        public Staff FindStaff(string email, string password)
+        {
+            return _dataContext.Staff.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+        }
     }
 }
