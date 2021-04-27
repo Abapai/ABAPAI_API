@@ -13,5 +13,7 @@ namespace ABAPAI.Domain.Interfaces.Repositories
         bool ExistName_user(string name_user,string email,string cpf_cnpj);
 
         bool ExistName_user(string name_user);
+
+        Staff FindStaff(string email, string password);
     }
 }

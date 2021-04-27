@@ -1,4 +1,5 @@
 ﻿using ABAPAI.Domain.Entities;
+using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ namespace ABAPAI.Tests.Repositories
         public bool ExistName_user(string name_user)
         {
             return false;
+        }
+
+        public Staff FindStaff(string email, string password)
+        {
+            return new Staff("abner_math", "name", "abnerm80@gmail.com", "abner123", Roles.STAFF, "09025325864", null, null, false);
         }
     }
 }

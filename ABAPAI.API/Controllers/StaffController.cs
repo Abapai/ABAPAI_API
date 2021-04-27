@@ -28,6 +28,22 @@ namespace ABAPAI.API.Controllers
         #endregion
 
         #region POST
+
+        [HttpPost]
+        [Route("login")]
+        public ActionResult<GenericCommandResult> Authentication(
+            [FromBody] CreateStaff_CPF_Command command,
+            [FromServices] StaffHandler staffHandler)
+        {
+            var result = (GenericCommandResult)staffHandler.Handle(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
         [HttpPost]
         [Route("cpf")]
         public ActionResult<GenericCommandResult> Create_staff_CPF(
