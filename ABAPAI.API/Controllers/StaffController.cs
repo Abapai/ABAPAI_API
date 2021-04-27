@@ -20,8 +20,9 @@ namespace ABAPAI.API.Controllers
         [Route("name_user/{name_user}")]
         public ActionResult<bool> ExistName_user(string name_user,[FromServices] IStaffRepository staffRepository)
         {
-            bool result = !staffRepository.ExistName_user(name_user);
-            return Ok(result);
+            
+            return Ok(!staffRepository.ExistName_user(name_user));
+
         }
 
         #endregion
