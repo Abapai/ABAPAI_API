@@ -15,7 +15,8 @@ namespace ABAPAI.Domain.Handlers
 {
     public class StaffHandler : Notifiable,
         IHandler<CreateStaff_CPF_Command>,
-        IHandler<CreateStaff_CNPJ_Command>
+        IHandler<CreateStaff_CNPJ_Command>,
+        IHandler<AuthenticationStaffCommand>
     {
         private IStaffRepository _staffRepository;
 
@@ -122,5 +123,40 @@ namespace ABAPAI.Domain.Handlers
                     new { identificador = staff.Id }
                     );
         }
+
+        public ICommandResult Handle(AuthenticationStaffCommand command)
+        {
+            command.Validate();
+
+            if (command.Invalid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Operação inválida!",
+                    command.Notifications
+                    );
+            }
+
+            Staff staff = _staffRepository.FindStaff(command.Email, command.Password);
+
+            if (staff is null)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Email ou senha inválido(s)!",
+                    null
+                    );
+            }
+
+            var token = Utils.Utils.GetJWTStaff(staff.Id.ToString(), staff.Role);
+
+            return new GenericCommandResult(
+                true,
+                "Autenticação feita com sucesso.",
+                new { id = token, name = staff.Email }
+                );
+
+        }
     }
+
 }

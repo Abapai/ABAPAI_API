@@ -18,5 +18,10 @@ namespace ABAPAI.Tests.Repositories
         {
             return false;
         }
+
+        public Staff FindStaff(string email, string password)
+        {
+            
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace ABAPAI.Domain.Interfaces.Repositories
         void Create(Staff staff);
 
         bool ExistName_user(string name_user);
+
+        Staff FindStaff(string email, string password);
     }
 }
