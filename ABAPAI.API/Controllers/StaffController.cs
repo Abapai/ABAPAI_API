@@ -1,7 +1,10 @@
 ﻿using ABAPAI.Domain.Commands;
 using ABAPAI.Domain.Commands.Staff;
+using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
+using ABAPAI.Domain.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,14 +18,13 @@ namespace ABAPAI.API.Controllers
     [ApiController]
     public class StaffController : ControllerBase
     {
+        
         #region GET
-
         [Route("name_user/{name_user}")]
+        
         public ActionResult<bool> ExistName_user(string name_user,[FromServices] IStaffRepository staffRepository)
-        {
-            
+        {            
             return Ok(!staffRepository.ExistName_user(name_user));
-
         }
 
         #endregion
@@ -32,7 +34,7 @@ namespace ABAPAI.API.Controllers
         [HttpPost]
         [Route("login")]
         public ActionResult<GenericCommandResult> Authentication(
-            [FromBody] CreateStaff_CPF_Command command,
+            [FromBody] AuthenticationStaffCommand command,
             [FromServices] StaffHandler staffHandler)
         {
             var result = (GenericCommandResult)staffHandler.Handle(command);
@@ -78,9 +80,9 @@ namespace ABAPAI.API.Controllers
         #endregion
 
 
-        [Route("cpf")]
-        public string  Get()
-          
+        [Route("online")]
+        [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
+        public string  Get()          
         {
             return "Here";
         }
