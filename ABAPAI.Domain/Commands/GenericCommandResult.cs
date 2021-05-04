@@ -4,6 +4,10 @@ namespace ABAPAI.Domain.Commands
 {
     public class GenericCommandResult : ICommandResult
     {
+        public GenericCommandResult()
+        {
+
+        }
         public GenericCommandResult(bool success, string message, object data)
         {
             Success = success;

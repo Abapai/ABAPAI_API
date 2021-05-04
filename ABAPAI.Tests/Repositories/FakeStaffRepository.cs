@@ -42,7 +42,7 @@ namespace ABAPAI.Tests.Repositories
 
         public bool ExistName_userById(string id, string name_user)
         {
-            throw new NotImplementedException();
+            return _staffs.Any(x => x.Name_user == name_user && x.Id.ToString() != id);
         }
 
         public Staff FindStaff(string email, string password)
@@ -52,12 +52,15 @@ namespace ABAPAI.Tests.Repositories
 
         public Staff GetById(string id)
         {
-            throw new NotImplementedException();
+            return _staffs.Where(x => x.Id.ToString() == id).FirstOrDefault();
         }
 
         public void Update(Staff staff)
         {
-            throw new NotImplementedException();
+            var staffs = GetById(staff.Id.ToString());
+            _staffs.Remove(staffs);
+            _staffs.Add(staffs);
         }
     }
+
 }
