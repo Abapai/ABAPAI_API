@@ -25,7 +25,7 @@ namespace ABAPAI.Domain.Commands.Staff
                 new Contract()
                 .Requires()
                 .IsEmailOrEmpty(Email, "Email", "E-mail inválido.")
-                .IsNotNullOrEmpty(Password, "Password", "Password não pode estar nula.")
+                .IsNotNullOrEmpty(Password, "Password", "Password não pode estar nula.")                
                 );
         }
     }

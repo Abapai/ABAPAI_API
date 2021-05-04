@@ -5,6 +5,7 @@ using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Interfaces.Commands;
 using ABAPAI.Domain.Interfaces.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
+using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace ABAPAI.Domain.Handlers
                 command.name,
                 command.email,
                 command.password,
-                Roles.FAN,
+                Roles.STAFF,
                 command.CPF,
                 null,
                 null,
@@ -102,7 +103,7 @@ namespace ABAPAI.Domain.Handlers
                 command.name,
                 command.email,
                 command.password,
-                Roles.FAN,
+                Roles.STAFF,
                 null,
                 command.CNPJ,
                 command.StateRegistration,
@@ -137,6 +138,7 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
+            command.Password = command.Password.GetHash();
             Staff staff = _staffRepository.FindStaff(command.Email, command.Password);
 
             if (staff is null)

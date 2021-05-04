@@ -17,10 +17,10 @@ namespace ABAPAI.Infra.Repositories
             _dataContext = dataContext;
         }
 
-        public async void Create(Staff staff)
+        public  void Create(Staff staff)
         {
-            var id = await _dataContext.Staff.AddAsync(staff);
-            await _dataContext.SaveChangesAsync();            
+            var id = _dataContext.Staff.Add(staff);
+             _dataContext.SaveChanges();            
         }
 
         public bool ExistName_user(string name_user,string email,string cpf_cnpj)
