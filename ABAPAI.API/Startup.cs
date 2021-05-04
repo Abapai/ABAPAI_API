@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -31,9 +30,10 @@ namespace ABAPAI.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SQL_SERVER")));
             services.AddScoped<StaffHandler, StaffHandler>();
             services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IFileUpload>(x => new FileUpload(Configuration.GetConnectionString("NAME_CONTAINER"), Configuration.GetConnectionString("KEY_AZURE_BLOB")));
 
             services.AddAuthentication()
                 .AddJwtBearer(Roles.STAFF.ToString(), x =>
@@ -98,7 +98,7 @@ namespace ABAPAI.API
             app.UseAuthentication();
             app.UseAuthorization();
 
-            
+
 
             app.UseEndpoints(endpoints =>
             {

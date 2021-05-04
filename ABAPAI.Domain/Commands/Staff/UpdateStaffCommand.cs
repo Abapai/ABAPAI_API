@@ -6,7 +6,7 @@ namespace ABAPAI.Domain.Commands.Staff
 {
     public class UpdateStaffCommand : Notifiable, ICommand
     {
-        public UpdateStaffCommand() {}
+        public UpdateStaffCommand() { }
 
         public UpdateStaffCommand(string name, string name_user, string description, string ddd, string phone, string email, string password)
         {
@@ -29,7 +29,7 @@ namespace ABAPAI.Domain.Commands.Staff
         public string Country { get; private set; }
         public int? Number { get; private set; }
 
-        public void UpdateId (string id)
+        public void UpdateId(string id)
         {
             this.Id = id;
         }

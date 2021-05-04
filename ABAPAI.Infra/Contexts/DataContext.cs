@@ -14,12 +14,12 @@ namespace ABAPAI.Infra.Contexts
         }
 
         public DbSet<Staff> Staff { get; set; }
-        public DbSet<AddressTemplate> addressTemplates {get;set;}
+        public DbSet<AddressTemplate> addressTemplates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Staff>().ToTable("Staff");
-            modelBuilder.Entity<Staff>().HasKey(x=> x.Id);
+            modelBuilder.Entity<Staff>().HasKey(x => x.Id);
             modelBuilder.Entity<Staff>().Property(x => x.Name_user).HasColumnType("varchar(70)").IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.Name).HasColumnType("varchar(100)").IsRequired();
             modelBuilder.Entity<Staff>().Property(x => x.Email).HasColumnType("varchar(100)").IsRequired();
@@ -38,7 +38,7 @@ namespace ABAPAI.Infra.Contexts
             modelBuilder.Entity<AddressTemplate>().Property(x => x.Country).HasColumnType("varchar(50)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.Address).HasColumnType("varchar(150)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.City).HasColumnType("varchar(70)");
-            modelBuilder.Entity<AddressTemplate>().Property(x => x.Postal_code).HasColumnType("varchar(50)");            
+            modelBuilder.Entity<AddressTemplate>().Property(x => x.Postal_code).HasColumnType("varchar(50)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.Country).HasColumnType("varchar(50)");
             //modelBuilder.Entity<AddressTemplate>().Property(x => x.Id_user).HasColumnType("varchar(50)");         
             modelBuilder.Entity<Staff>().HasOne(x => x.Address).WithOne(y => y.Staff).HasForeignKey<AddressTemplate>(y => y.Id_user);

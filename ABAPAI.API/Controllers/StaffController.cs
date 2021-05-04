@@ -1,16 +1,9 @@
 ﻿using ABAPAI.Domain.Commands;
 using ABAPAI.Domain.Commands.Staff;
-using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
-using ABAPAI.Domain.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ABAPAI.API.Controllers
 {
@@ -18,12 +11,12 @@ namespace ABAPAI.API.Controllers
     [ApiController]
     public class StaffController : ControllerBase
     {
-        
+
         #region GET
         [Route("name_user/{name_user}")]
-        
-        public ActionResult<bool> ExistName_user(string name_user,[FromServices] IStaffRepository staffRepository)
-        {            
+
+        public ActionResult<bool> ExistName_user(string name_user, [FromServices] IStaffRepository staffRepository)
+        {
             return Ok(!staffRepository.ExistName_user(name_user));
         }
 
@@ -49,13 +42,13 @@ namespace ABAPAI.API.Controllers
         [HttpPost]
         [Route("cpf")]
         public ActionResult<GenericCommandResult> Create_staff_CPF(
-            [FromBody]CreateStaff_CPF_Command command,
+            [FromBody] CreateStaff_CPF_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult) staffHandler.Handle(command);
+            var result = (GenericCommandResult)staffHandler.Handle(command);
             if (result.Success)
             {
-                return Created("",result);
+                return Created("", result);
             }
 
             return BadRequest(result);
@@ -67,29 +60,6 @@ namespace ABAPAI.API.Controllers
             [FromBody] CreateStaff_CNPJ_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult) staffHandler.Handle(command);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-           
-        }
-
-        #endregion
-
-        #region PUT
-
-        [HttpPut]
-        [Route("update")]
-        public ActionResult<GenericCommandResult> UpdateStaff(
-           [FromBody] UpdateStaffCommand command,
-           [FromServices] StaffHandler staffHandler)
-        {
-            var idUser = User.Claims.FirstOrDefault(x => x.Type == "NameIdentifier").Value;
-            command.UpdateId(idUser);
-
             var result = (GenericCommandResult)staffHandler.Handle(command);
             if (result.Success)
             {
@@ -97,15 +67,18 @@ namespace ABAPAI.API.Controllers
             }
 
             return BadRequest(result);
+
         }
 
         #endregion
 
+
         [Route("online")]
         [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
-        public string  Get()          
+        public string Get()
         {
             return "Here";
         }
     }
+
 }

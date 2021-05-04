@@ -1,9 +1,6 @@
 ﻿using ABAPAI.Domain.Interfaces.Commands;
 using Flunt.Notifications;
 using Flunt.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Domain.Commands.Staff
 {
@@ -43,10 +40,10 @@ namespace ABAPAI.Domain.Commands.Staff
                 new Contract()
                 .Requires()
                 .IsEmailOrEmpty(email, "email", "E-mail inválido.")
-                .HasLen(CNPJ,18, "CNPJ", $"CNPJ Inválido.")
-                .IfNotNull(StateRegistration==null?"":null,z=>z.IsTrue(Free,"Free","Se não for ISENTO, é necessário o preenchimento da StateRegistration"))
-                .IfNotNull(StateRegistration,x=> x.IsFalse(Free,"Free", "Free tem que estar false, já que contém StateRegistration"))
-                .IsNotNull(Free, "Free","Free não pode estar nulo.")
+                .HasLen(CNPJ, 18, "CNPJ", $"CNPJ Inválido.")
+                .IfNotNull(StateRegistration == null ? "" : null, z => z.IsTrue(Free, "Free", "Se não for ISENTO, é necessário o preenchimento da StateRegistration"))
+                .IfNotNull(StateRegistration, x => x.IsFalse(Free, "Free", "Free tem que estar false, já que contém StateRegistration"))
+                .IsNotNull(Free, "Free", "Free não pode estar nulo.")
                 .IsNotNullOrEmpty(name, "Name", "Name não pode estar nulo.")
                 .IsNotNullOrEmpty(name_user, "Name_user", "Name não pode estar nulo.")
                 .AreEquals(password, confirmpassword, "Password", "Password deve ser igual a Confirmpassword.")
