@@ -16,7 +16,8 @@ namespace ABAPAI.Domain.Handlers
     public class StaffHandler : Notifiable,
         IHandler<CreateStaff_CPF_Command>,
         IHandler<CreateStaff_CNPJ_Command>,
-        IHandler<AuthenticationStaffCommand>
+        IHandler<AuthenticationStaffCommand>,
+        IHandler<UpdateStaffCommand>
     {
         private IStaffRepository _staffRepository;
 
@@ -156,6 +157,36 @@ namespace ABAPAI.Domain.Handlers
                 token
                 );
 
+        }
+
+        public ICommandResult Handle(UpdateStaffCommand command)
+        {
+            command.Validate();
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Staff não está valido!", command.Notifications);
+
+            var staff = _staffRepository.GetById(command.Id);
+
+            var existName_user =_staffRepository.ExistName_userById(command.Id, command.Name_user);
+
+            if (existName_user)
+            {
+                command.AddNotification("Name_user", "Já existe usuário com este campo");
+                return new GenericCommandResult(
+                    false,
+                    "Staff não atualizado.",
+                    command.Notifications
+                    );
+            }
+
+            var addressTemplate = new AddressTemplate(command.Address, command.City, command.Postal_code, command.Country, command.Number, staff.Id);
+            staff.Address.UpdateAddress(addressTemplate);
+
+            staff.UpdateStaff(command.Name_user, command.Name, command.DDD, command.Phone, command.Description, command.DDD, command.Phone);
+
+            _staffRepository.Update(staff);
+
+            return new GenericCommandResult(true, "Staff salvo.", staff);
         }
     }
 

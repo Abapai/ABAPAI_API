@@ -1,5 +1,7 @@
 ﻿using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Utils;
+using System;
+
 namespace ABAPAI.Domain.Entities
 {
     public class Staff : Entity
@@ -96,8 +98,32 @@ namespace ABAPAI.Domain.Entities
             this.Image = image;
         }
 
+        public void UpdateStaff(string name, string name_user, string description, string ddd, string phone, string email, string password)
+        {
+            if (name_user != null)
+                this.Name_user = name_user;
+
+            if (name != null)
+                this.Name = name;
+
+            if (description != null)
+                this.Description = description;
+
+            if (ddd != null)
+                this.DDD = ddd;
+
+            if (phone != null)
+                this.Phone = phone;
+
+            if (email != null)
+                this.Email = email;
+
+            if (password != null)
+                this.Password = password;
+        }
+
         #endregion
-                
+
 
     }
 }

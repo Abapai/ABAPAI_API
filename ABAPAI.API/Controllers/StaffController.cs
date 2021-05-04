@@ -77,6 +77,27 @@ namespace ABAPAI.API.Controllers
 
         #endregion
 
+        #region PUT
+
+        [HttpPut]
+        [Route("update")]
+        public ActionResult<GenericCommandResult> UpdateStaff(
+           [FromBody] UpdateStaffCommand command,
+           [FromServices] StaffHandler staffHandler)
+        {
+            var idUser = User.Claims.FirstOrDefault(x => x.Type == "NameIdentifier").Value;
+            command.UpdateId(idUser);
+
+            var result = (GenericCommandResult)staffHandler.Handle(command);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        #endregion
 
         [Route("cpf")]
         public string  Get()
