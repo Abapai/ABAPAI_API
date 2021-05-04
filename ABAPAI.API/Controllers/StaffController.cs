@@ -4,7 +4,6 @@ using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace ABAPAI.API.Controllers
 {
@@ -71,27 +70,6 @@ namespace ABAPAI.API.Controllers
 
         }
 
-
-        [HttpPost]
-        [Route("upload")]
-        public async Task<ActionResult<string>> Upload([FromBody] UploadImageCommand command, [FromServices] IFileUpload fileUpload)
-        {
-            var uploadService = await fileUpload.UploadBase64ImageAsync(command.Image);
-            return uploadService;
-        }
-
-
-        [HttpDelete]
-        [Route("upload")]
-        public async Task<ActionResult<bool>> Delete([FromBody] UploadImageCommand command, [FromServices] IFileUpload fileUpload)
-        {
-            fileUpload.UpdateImageAsync(command.Image, "b8a52708-3a14-4a79-bace-267f015ca92a.jpg");
-            return true;
-        }
-
-
-
-
         #endregion
 
 
@@ -103,8 +81,4 @@ namespace ABAPAI.API.Controllers
         }
     }
 
-    public class UploadImageCommand
-    {
-        public string Image { get; set; }
-    }
 }
