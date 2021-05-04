@@ -6,5 +6,7 @@ namespace ABAPAI.Domain.Interfaces.Repositories
     {
         Task<string> UploadBase64ImageAsync(string base64Image);
         void DeleteImageAsync(string blobName);
+
+        void UpdateImageAsync(string base64Image, string blobName_Actual);
     }
 }

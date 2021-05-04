@@ -40,7 +40,7 @@ namespace ABAPAI.Infra.Repositories
                 {
                     await blobClient.UploadAsync(stream);
                 }
-
+                
                 return blobClient.Uri.AbsoluteUri;
             }
             catch
@@ -60,6 +60,37 @@ namespace ABAPAI.Infra.Repositories
 
                 //Deleta se existir 
                 await blobClient.DeleteIfExistsAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async void UpdateImageAsync(string base64Image, string blobName_Actual)
+        {
+            try
+            { 
+                // Gera um nome randomico para imagem
+                var filename = Guid.NewGuid().ToString() + ".jpg";
+
+                //Limpa o hash base64 enviado
+                var data = new Regex(@"^data:image\/[a-z]+;base64,").Replace(base64Image, "");
+
+                //Convertendo um Base64 para Array de Bytes
+                byte[] imageBytes = Convert.FromBase64String(data);
+
+                // Define a conexão de qual blob
+                var blobClient = new BlobClient(KEY_CONTAINER, NAME_CONTAINER, blobName_Actual);
+                var exist = await blobClient.ExistsAsync();
+                if (exist)
+                {
+                    using (var stream = new MemoryStream(imageBytes))
+                    {
+                        await blobClient.UploadAsync(stream);
+                    }
+                }
+
             }
             catch
             {
