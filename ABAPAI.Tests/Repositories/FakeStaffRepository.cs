@@ -5,8 +5,6 @@ using ABAPAI.Domain.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ABAPAI.Tests.Repositories
 {
@@ -27,7 +25,7 @@ namespace ABAPAI.Tests.Repositories
 
         public void Create(Staff staff)
         {
-            
+
         }
 
         public bool ExistName_user(string name_user, string email, string cpf_cnpj)
@@ -47,7 +45,7 @@ namespace ABAPAI.Tests.Repositories
 
         public Staff FindStaff(string email, string password)
         {
-            return _staffs.Where(x => x.Email == email && x.Password == password).FirstOrDefault();            
+            return _staffs.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
         }
 
         public Staff GetById(string id)

@@ -7,10 +7,6 @@ using ABAPAI.Domain.Interfaces.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Handlers
 {
@@ -27,10 +23,10 @@ namespace ABAPAI.Domain.Handlers
             _staffRepository = staffRepository;
         }
 
-        public  ICommandResult Handle(CreateStaff_CPF_Command command)
+        public ICommandResult Handle(CreateStaff_CPF_Command command)
         {
             command.Validate();
-            
+
             if (command.Invalid)
             {
                 return new GenericCommandResult(
@@ -40,7 +36,7 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user,command.email,command.CPF);
+            bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
             if (existUserName)
             {
                 command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
@@ -62,16 +58,16 @@ namespace ABAPAI.Domain.Handlers
                 null,
                 null,
                 false);
-            
+
             staff.hashPassword();
 
 
-             _staffRepository.Create(staff);
+            _staffRepository.Create(staff);
 
             return new GenericCommandResult(
                     true,
                     $"Staff {staff.Name} criado com sucesso!",
-                    new { identificador = staff.Id}
+                    new { identificador = staff.Id }
                     );
         }
 
@@ -88,7 +84,7 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user,command.email,command.CNPJ);
+            bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
             if (existUserName)
             {
                 command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
@@ -169,7 +165,7 @@ namespace ABAPAI.Domain.Handlers
 
             var staff = _staffRepository.GetById(command.Id);
 
-            var existName_user =_staffRepository.ExistName_userById(command.Id, command.Name_user);
+            var existName_user = _staffRepository.ExistName_userById(command.Id, command.Name_user);
 
             if (existName_user)
             {
