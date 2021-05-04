@@ -1,21 +1,20 @@
+using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
 using ABAPAI.Infra.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+
 
 namespace ABAPAI.API
 {
@@ -35,6 +34,34 @@ namespace ABAPAI.API
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
             services.AddScoped<StaffHandler, StaffHandler>();
             services.AddScoped<IStaffRepository, StaffRepository>();
+
+            services.AddAuthentication()
+                .AddJwtBearer(Roles.STAFF.ToString(), x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e")),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            string SchemeSTAFF_JWT = $"JWT_{Roles.STAFF}";
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(Roles.STAFF.ToString())
+                    .Build();
+
+                options.AddPolicy(SchemeSTAFF_JWT, new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(Roles.STAFF.ToString())
+                    .Build());
+            });
 
             services.AddSwaggerGen(c => //adicionando o Swagger
             {
@@ -68,7 +95,10 @@ namespace ABAPAI.API
                 .AllowAnyHeader();
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {
