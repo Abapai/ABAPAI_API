@@ -1,6 +1,5 @@
 ﻿using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Utils;
-using System;
 
 namespace ABAPAI.Domain.Entities
 {
@@ -21,7 +20,7 @@ namespace ABAPAI.Domain.Entities
             StateRegistration = stateRegistration;
             Free = free;
         }
-        
+
         //ALL
         public Staff(string name_user, string name, string email, string password, Roles role, string cPF, string cNPJ, string stateRegistration, bool? free, string description, string dDD, string phone, string image)
         {
@@ -38,8 +37,8 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
-           
-        }      
+
+        }
 
         #endregion
 
@@ -66,7 +65,7 @@ namespace ABAPAI.Domain.Entities
 
         #endregion
 
-            #region Not Require
+        #region Not Require
         public string Description { get; private set; }
 
         public string DDD { get; private set; }
@@ -89,8 +88,8 @@ namespace ABAPAI.Domain.Entities
 
         public void resetPassword(string password)
         {
-             this.Password = password;
-           
+            this.Password = password;
+
         }
 
         public void changeImage(string image)

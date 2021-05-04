@@ -1,9 +1,6 @@
 ﻿using ABAPAI.Domain.Interfaces.Commands;
 using Flunt.Notifications;
 using Flunt.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Domain.Commands.Staff
 {
@@ -36,12 +33,12 @@ namespace ABAPAI.Domain.Commands.Staff
             AddNotifications(
                 new Contract()
                 .Requires()
-                .IsEmailOrEmpty(email,"email","E-mail inválido.")                
-                .HasLen(CPF,14,"CPF","CPF Inválido.")
-                .IsNotNullOrEmpty(name,"Name","Name não pode estar nulo.")
-                .IsNotNullOrEmpty(name_user,"Name_user","Name não pode estar nulo.")
-                .AreEquals(password,confirmpassword,"Password","Password deve ser igual a Confirmpassword.")
-                .IsNotNullOrEmpty(password,"Password","Password não pode estar nulo.")
+                .IsEmailOrEmpty(email, "email", "E-mail inválido.")
+                .HasLen(CPF, 14, "CPF", "CPF Inválido.")
+                .IsNotNullOrEmpty(name, "Name", "Name não pode estar nulo.")
+                .IsNotNullOrEmpty(name_user, "Name_user", "Name não pode estar nulo.")
+                .AreEquals(password, confirmpassword, "Password", "Password deve ser igual a Confirmpassword.")
+                .IsNotNullOrEmpty(password, "Password", "Password não pode estar nulo.")
                 .IsNotNullOrEmpty(password, "Confirmpassword", "Confirmpassword não pode estar nulo.")
                 );
         }

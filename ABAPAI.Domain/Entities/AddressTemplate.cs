@@ -1,13 +1,11 @@
 ﻿using ABAPAI.Domain.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Domain.Entities
 {
     public class AddressTemplate
     {
-        public AddressTemplate(string address, string city, string postal_code, string country, int? number,Guid id_user)
+        public AddressTemplate(string address, string city, string postal_code, string country, int? number, Guid id_user)
         {
             Address = address;
             City = city;
@@ -49,8 +47,8 @@ namespace ABAPAI.Domain.Entities
                 this.Number = template.Number;
             }
         }
-        
-        public Guid Id_user { get;private set; }
+
+        public Guid Id_user { get; private set; }
         public virtual Staff Staff { get; private set; }
 
     }

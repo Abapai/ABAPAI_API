@@ -2,10 +2,7 @@
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ABAPAI.Infra.Repositories
 {
@@ -18,20 +15,20 @@ namespace ABAPAI.Infra.Repositories
             _dataContext = dataContext;
         }
 
-        public  void Create(Staff staff)
+        public void Create(Staff staff)
         {
             var id = _dataContext.Staff.Add(staff);
-             _dataContext.SaveChanges();            
+            _dataContext.SaveChanges();
         }
 
-        public bool ExistName_user(string name_user,string email,string cpf_cnpj)
+        public bool ExistName_user(string name_user, string email, string cpf_cnpj)
         {
             return _dataContext.Staff.Any(x => x.Name_user == name_user || x.Name == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj);
         }
 
         public bool ExistName_user(string name_user)
         {
-           return _dataContext.Staff.Any(x => x.Name_user == name_user );
+            return _dataContext.Staff.Any(x => x.Name_user == name_user);
         }
 
         public bool ExistName_userById(string id, string name_user)

@@ -1,7 +1,6 @@
 ﻿using ABAPAI.Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -28,12 +27,12 @@ namespace ABAPAI.Domain.Utils
         {
             UnicodeEncoding unicodeEncoding = new UnicodeEncoding();
             byte[] hashBytes;
-            using(HashAlgorithm hash = SHA1.Create())
+            using (HashAlgorithm hash = SHA1.Create())
             {
                 hashBytes = hash.ComputeHash(unicodeEncoding.GetBytes(password));
             }
             var hashValue = new StringBuilder(hashBytes.Length * 2);
-            foreach(byte b in hashBytes)
+            foreach (byte b in hashBytes)
             {
                 hashValue.AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", b);
             }
