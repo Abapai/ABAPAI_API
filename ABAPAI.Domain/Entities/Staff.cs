@@ -19,6 +19,7 @@ namespace ABAPAI.Domain.Entities
             CNPJ = cNPJ;
             StateRegistration = stateRegistration;
             Free = free;
+            Address = new AddressTemplate(Id);
         }
 
         //ALL
@@ -37,7 +38,7 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
-
+            
         }
 
         #endregion
@@ -97,7 +98,7 @@ namespace ABAPAI.Domain.Entities
             this.Image = image;
         }
 
-        public void UpdateStaff(string name, string name_user, string description, string ddd, string phone, string email, string password)
+        public void UpdateStaff(string name, string name_user, string description, string ddd, string phone, string image)
         {
             if (name_user != null)
                 this.Name_user = name_user;
@@ -113,12 +114,8 @@ namespace ABAPAI.Domain.Entities
 
             if (phone != null)
                 this.Phone = phone;
-
-            if (email != null)
-                this.Email = email;
-
-            if (password != null)
-                this.Password = password;
+            if (image != null)
+                this.Image = image;
         }
 
         #endregion

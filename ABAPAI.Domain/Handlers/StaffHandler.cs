@@ -7,6 +7,7 @@ using ABAPAI.Domain.Interfaces.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
+using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Handlers
 {
@@ -17,147 +18,158 @@ namespace ABAPAI.Domain.Handlers
         IHandler<UpdateStaffCommand>
     {
         private IStaffRepository _staffRepository;
-
-        public StaffHandler(IStaffRepository staffRepository)
+        private IFileUpload _fileUpload;
+        public StaffHandler(IStaffRepository staffRepository, IFileUpload fileUpload)
         {
             _staffRepository = staffRepository;
+            _fileUpload = fileUpload;
         }
 
-        public ICommandResult Handle(CreateStaff_CPF_Command command)
+        public async Task<ICommandResult> Handle(CreateStaff_CPF_Command command)
         {
-            command.Validate();
-
-            if (command.Invalid)
+           return await Task.Run(() =>
             {
+                command.Validate();
+
+                if (command.Invalid)
+                {
+                    return new GenericCommandResult(
+                        false,
+                        "Staff não criada, operação inválida",
+                        command.Notifications
+                        );
+                }
+
+                bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
+                if (existUserName)
+                {
+                    command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
+                    return new GenericCommandResult(
+                        false,
+                        "Staff não criada, operação inválida",
+                        command.Notifications
+                        );
+                }
+
+
+                var staff = new Staff(
+                    command.name_user,
+                    command.name,
+                    command.email,
+                    command.password,
+                    Roles.STAFF,
+                    command.CPF,
+                    null,
+                    null,
+                    false);
+
+                staff.hashPassword();
+
+
+                _staffRepository.Create(staff);
+
                 return new GenericCommandResult(
-                    false,
-                    "Staff não criada, operação inválida",
-                    command.Notifications
-                    );
-            }
+                        true,
+                        $"Staff {staff.Name} criado com sucesso!",
+                        new { identificador = staff.Id }
+                        );
+            });
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
-            if (existUserName)
-            {
-                command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
-                return new GenericCommandResult(
-                    false,
-                    "Staff não criada, operação inválida",
-                    command.Notifications
-                    );
-            }
-
-
-            var staff = new Staff(
-                command.name_user,
-                command.name,
-                command.email,
-                command.password,
-                Roles.STAFF,
-                command.CPF,
-                null,
-                null,
-                false);
-
-            staff.hashPassword();
-
-
-            _staffRepository.Create(staff);
-
-            return new GenericCommandResult(
-                    true,
-                    $"Staff {staff.Name} criado com sucesso!",
-                    new { identificador = staff.Id }
-                    );
+            
         }
 
-        public ICommandResult Handle(CreateStaff_CNPJ_Command command)
+        public async Task<ICommandResult> Handle(CreateStaff_CNPJ_Command command)
         {
-            command.Validate();
-
-            if (command.Invalid)
+            return await Task.Run(() =>
             {
-                return new GenericCommandResult(
-                    false,
-                    "Staff não criada, operação inválida",
-                    command.Notifications
-                    );
-            }
+                command.Validate();
 
-            bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
-            if (existUserName)
-            {
-                command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
-                return new GenericCommandResult(
-                    false,
-                    "Staff não criada, operação inválida",
-                    command.Notifications
-                    );
-            }
+                if (command.Invalid)
+                {
+                    return new GenericCommandResult(
+                        false,
+                        "Staff não criada, operação inválida",
+                        command.Notifications
+                        );
+                }
 
-            var staff = new Staff(
-                command.name_user,
-                command.name,
-                command.email,
-                command.password,
-                Roles.STAFF,
-                null,
-                command.CNPJ,
-                command.StateRegistration,
-                command.Free,
-                null,
-                null,
-                null,
-                null
-                );
+                bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
+                if (existUserName)
+                {
+                    command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
+                    return new GenericCommandResult(
+                        false,
+                        "Staff não criada, operação inválida",
+                        command.Notifications
+                        );
+                }
 
-            staff.hashPassword();
-
-            _staffRepository.Create(staff);
-
-            return new GenericCommandResult(
-                    true,
-                    $"Staff {staff.Name} criado com sucesso!",
-                    new { identificador = staff.Id }
-                    );
-        }
-
-        public ICommandResult Handle(AuthenticationStaffCommand command)
-        {
-            command.Validate();
-
-            if (command.Invalid)
-            {
-                return new GenericCommandResult(
-                    false,
-                    "Operação inválida!",
-                    command.Notifications
-                    );
-            }
-
-            command.Password = command.Password.GetHash();
-            Staff staff = _staffRepository.FindStaff(command.Email, command.Password);
-
-            if (staff is null)
-            {
-                return new GenericCommandResult(
-                    false,
-                    "Email ou senha inválido(s)!",
+                var staff = new Staff(
+                    command.name_user,
+                    command.name,
+                    command.email,
+                    command.password,
+                    Roles.STAFF,
+                    null,
+                    command.CNPJ,
+                    command.StateRegistration,
+                    command.Free,
+                    null,
+                    null,
+                    null,
                     null
                     );
-            }
 
-            var token = Utils.Utils.GetJWTStaff(staff.Id.ToString(), staff.Role);
+                staff.hashPassword();
 
-            return new GenericCommandResult(
-                true,
-                "Autenticação feita com sucesso.",
-                token
-                );
+                _staffRepository.Create(staff);
 
+                return new GenericCommandResult(
+                        true,
+                        $"Staff {staff.Name} criado com sucesso!",
+                        new { identificador = staff.Id }
+                        );
+            });
         }
 
-        public ICommandResult Handle(UpdateStaffCommand command)
+        public async Task<ICommandResult> Handle(AuthenticationStaffCommand command)
+        {
+            return await Task.Run(() =>
+            {
+                command.Validate();
+
+                if (command.Invalid)
+                {
+                    return new GenericCommandResult(
+                        false,
+                        "Operação inválida!",
+                        command.Notifications
+                        );
+                }
+
+                command.Password = command.Password.GetHash();
+                Staff staff = _staffRepository.FindStaff(command.Email, command.Password);
+
+                if (staff is null)
+                {
+                    return new GenericCommandResult(
+                        false,
+                        "Email ou senha inválido(s)!",
+                        null
+                        );
+                }
+
+                var token = Utils.Utils.GetJWTStaff(staff.Id.ToString(), staff.Role);
+
+                return new GenericCommandResult(
+                    true,
+                    "Autenticação feita com sucesso.",
+                    token
+                    );
+            });
+        }
+
+        public async Task<ICommandResult> Handle(UpdateStaffCommand command)
         {
             command.Validate();
             if (command.Invalid)
@@ -177,10 +189,28 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
+            //Update Image - AZURE STORANGE BLOB
+            if (!string.IsNullOrEmpty(command.Image))
+            {   
+                
+                bool sucess = await _fileUpload.UpdateImageAsync(command.Image, staff.Image);
+                if (!sucess)
+                {
+                    command.AddNotification("Image", "Erro ao atualizar a image");
+                    return new GenericCommandResult(
+                                false,
+                                "Staff não atualizado.",
+                                command.Notifications
+                            );
+                }
+            }
+
+            //Update STAFF
+            staff.UpdateStaff(command.Name, command.Name_user, command.Description, command.DDD, command.Phone, command.Image);
+
+            //Update Address
             var addressTemplate = new AddressTemplate(command.Address, command.City, command.Postal_code, command.Country, command.Number, staff.Id);
             staff.Address.UpdateAddress(addressTemplate);
-
-            staff.UpdateStaff(command.Name_user, command.Name, command.DDD, command.Phone, command.Description, command.DDD, command.Phone);
 
             _staffRepository.Update(staff);
 

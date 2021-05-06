@@ -11,9 +11,9 @@ namespace ABAPAI.Tests.Repositories
 
         }
 
-        public void UpdateImageAsync(string base64Image, string blobName_Actual)
+        public Task<bool> UpdateImageAsync(string base64Image, string blobName_Actual)
         {
-
+            return Task.FromResult<bool>(true);
         }
 
         public Task<string> UploadBase64ImageAsync(string base64Image)

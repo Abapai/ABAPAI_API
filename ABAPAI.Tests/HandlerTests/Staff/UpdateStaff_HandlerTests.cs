@@ -1,39 +1,76 @@
 ﻿using ABAPAI.Domain.Commands;
 using ABAPAI.Domain.Commands.Staff;
 using ABAPAI.Domain.Handlers;
+using ABAPAI.Domain.Utils;
 using ABAPAI.Tests.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ABAPAI.Tests.HandlerTests.Staff
+namespace ABAPAI.Tests.HandlerTests
 {
     [TestClass]
     public class UpdateStaff_HandlerTests
     {
-        private readonly UpdateStaffCommand _validCommand = new UpdateStaffCommand("abner", "abner_math", "usuario de teste", "41", "999999999", "abner@gmail.com", "senhadoabner");
-        private readonly UpdateStaffCommand _invalidCommand = new UpdateStaffCommand("abner", "abner_math", "usuario de teste", "41", "999999999", "abner@gmail.com", "senhadoabner");
-        private readonly StaffHandler _staffHandler = new StaffHandler(new FakeStaffRepository());
+        public static FakeStaffRepository _fakeStaffRepository = new FakeStaffRepository();        
+        private readonly StaffHandler _staffHandler = new StaffHandler(_fakeStaffRepository, new FakeFileUploadRepository());
         private GenericCommandResult _result = new GenericCommandResult();
         private readonly AuthenticationStaffCommand _userValid = new AuthenticationStaffCommand("abnerm80@gmail.com", "abner123");
 
         [TestMethod]
-        public void Dado_um_id_invalido_parar_a_execucao()
+        public void Dado_um_name_user_invalido_parar_a_execucao()
         {
-            var _fakeRepository = new FakeStaffRepository();
-            var fakeStaff = _fakeRepository.FindStaff("abnerm80@gmail.com", "abner123");
-            //var fakeStaffTest = _fakeRepository.FindStaff("jhonatan_med@gmail.com", "jhonatan123");
-            fakeStaff.UpdateStaff(fakeStaff.);
-            //_result = (GenericCommandResult)_staffHandler.Handle(fakeStaff);
+            
+            var fakeStaff = _fakeStaffRepository.FindStaff("abnerm80@gmail.com", "abner123".GetHash());           
+            
+            UpdateStaffCommand updateStaffCommand = new UpdateStaffCommand(
+               fakeStaff.Name,
+               "jhonatan_med",
+               fakeStaff.Description,
+               fakeStaff.DDD,
+               fakeStaff.Phone,
+               fakeStaff.Address.Address,
+               fakeStaff.Address.City,
+               fakeStaff.Address.Postal_code,
+               fakeStaff.Address.Country,
+               fakeStaff.Address.Number
+                );
+            updateStaffCommand.UpdateId(fakeStaff.Id.ToString());
+
+            _result = (GenericCommandResult) _staffHandler.Handle(updateStaffCommand).Result;
+            
             Assert.AreEqual(_result.Success, false);
         }
 
         [TestMethod]
-        public void Dado_um_id_valido_deve_atualizar_o_staff()
+        public void Dado_um_valido_deve_atualizar_o_staff()
         {
-            _result = (GenericCommandResult)_staffHandler.Handle(_validCommand);
+            const string email = "abnerm80@gmail.com";
+            string password = "abner123".GetHash();
+            var fakeStaff = _fakeStaffRepository.FindStaff(email,password);
+
+            UpdateStaffCommand updateStaffCommand = new UpdateStaffCommand(
+               fakeStaff.Name,
+               "abner_math2021",
+               fakeStaff.Description,
+               "41",
+               "991238262",
+               fakeStaff.Address.Address,
+               fakeStaff.Address.City,
+               fakeStaff.Address.Postal_code,
+               fakeStaff.Address.Country,
+               fakeStaff.Address.Number
+                );
+
+            updateStaffCommand.UpdateId(fakeStaff.Id.ToString());
+
+            _result = (GenericCommandResult) _staffHandler.Handle(updateStaffCommand).Result;
+
+            var fakeStaffUpdated = _fakeStaffRepository.FindStaff(email, password);
             Assert.AreEqual(_result.Success, true);
+            Assert.AreEqual(fakeStaffUpdated.Phone, updateStaffCommand.Phone);
+            Assert.AreEqual(fakeStaffUpdated.DDD, updateStaffCommand.DDD);
         }
 
     }

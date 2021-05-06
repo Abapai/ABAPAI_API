@@ -67,7 +67,7 @@ namespace ABAPAI.Infra.Repositories
             }
         }
 
-        public async void UpdateImageAsync(string base64Image, string blobName_Actual)
+        public async Task<bool> UpdateImageAsync(string base64Image, string blobName_Actual)
         {
             try
             {
@@ -89,12 +89,14 @@ namespace ABAPAI.Infra.Repositories
                     {
                         await blobClient.UploadAsync(stream, overwrite: true);
                     }
+                    return true;
                 }
 
+                return false;
             }
             catch
             {
-                throw;
+                return false;                
             }
         }
     }

@@ -5,6 +5,8 @@ namespace ABAPAI.Domain.Entities
 {
     public class AddressTemplate
     {
+
+
         public AddressTemplate(string address, string city, string postal_code, string country, int? number, Guid id_user)
         {
             Address = address;
@@ -15,6 +17,12 @@ namespace ABAPAI.Domain.Entities
             Id_address = Guid.NewGuid();
             Id_user = id_user;
 
+        }
+
+        public AddressTemplate(Guid id_user)
+        {
+            Id_address = Guid.NewGuid();
+            Id_user = id_user;
         }
 
         public Guid Id_address { get; private set; }

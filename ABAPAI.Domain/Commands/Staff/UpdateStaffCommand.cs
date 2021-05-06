@@ -8,26 +8,33 @@ namespace ABAPAI.Domain.Commands.Staff
     {
         public UpdateStaffCommand() { }
 
-        public UpdateStaffCommand(string name, string name_user, string description, string ddd, string phone, string email, string password)
+        public UpdateStaffCommand(string name, string name_user, string description, string dDD, string phone, string address, string city, string postal_code, string country, int? number)
         {
             Name = name;
             Name_user = name_user;
             Description = description;
-            DDD = ddd;
+            DDD = dDD;
             Phone = phone;
+            Address = address;
+            City = city;
+            Postal_code = postal_code;
+            Country = country;
+            Number = number;
         }
 
         public string Id { get; private set; }
+        public string Image { get; set; }
         public string Name { get; set; }
         public string Name_user { get; set; }
         public string Description { get; set; }
+
         public string DDD { get; set; }
         public string Phone { get; set; }
-        public string Address { get; private set; }
-        public string City { get; private set; }
-        public string Postal_code { get; private set; }
-        public string Country { get; private set; }
-        public int? Number { get; private set; }
+        public string Address { get;  set; }
+        public string City { get;  set; }
+        public string Postal_code { get;  set; }
+        public string Country { get;  set; }
+        public int? Number { get;  set; }        
 
         public void UpdateId(string id)
         {
@@ -39,8 +46,8 @@ namespace ABAPAI.Domain.Commands.Staff
             AddNotifications(
                 new Contract()
                .Requires()
-               .IsNotNullOrEmpty(Name, "Name", "Name inválido.")
-               .IsNotNullOrEmpty(Name_user, "Name_user", "Name_user inválido.")
+               .IsNotNullOrEmpty(Name, "Name", "Name não pode estar nulo.")
+               .IsNotNullOrEmpty(Name_user, "Name_user", "Name_user não pode estar nulo.")
             );
         }
     }

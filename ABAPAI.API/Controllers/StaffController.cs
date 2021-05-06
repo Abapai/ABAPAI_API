@@ -4,7 +4,7 @@ using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Threading.Tasks;
 
 namespace ABAPAI.API.Controllers
 {
@@ -27,11 +27,11 @@ namespace ABAPAI.API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public ActionResult<GenericCommandResult> Authentication(
+        public async Task<ActionResult<GenericCommandResult>> Authentication(
             [FromBody] AuthenticationStaffCommand command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult)staffHandler.Handle(command);
+            var result = (GenericCommandResult) await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Ok(result);
@@ -42,11 +42,11 @@ namespace ABAPAI.API.Controllers
 
         [HttpPost]
         [Route("cpf")]
-        public ActionResult<GenericCommandResult> Create_staff_CPF(
+        public async Task<ActionResult<GenericCommandResult>> Create_staff_CPF(
             [FromBody] CreateStaff_CPF_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult)staffHandler.Handle(command);
+            var result = (GenericCommandResult) await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Created("", result);
@@ -57,11 +57,11 @@ namespace ABAPAI.API.Controllers
 
         [HttpPost]
         [Route("cnpj")]
-        public ActionResult<GenericCommandResult> Create_staff_CNPJ(
+        public async Task<ActionResult<GenericCommandResult>> Create_staff_CNPJ(
             [FromBody] CreateStaff_CNPJ_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult)staffHandler.Handle(command);
+            var result = (GenericCommandResult) await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Ok(result);

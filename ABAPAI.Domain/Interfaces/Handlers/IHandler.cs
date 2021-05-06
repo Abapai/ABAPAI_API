@@ -1,9 +1,10 @@
 ﻿using ABAPAI.Domain.Interfaces.Commands;
+using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Interfaces.Handlers
 {
     public interface IHandler<T> where T : ICommand
     {
-        ICommandResult Handle(T command);
+        Task<ICommandResult> Handle(T command);
     }
 }
