@@ -2,6 +2,7 @@
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace ABAPAI.Infra.Repositories
@@ -17,7 +18,7 @@ namespace ABAPAI.Infra.Repositories
 
         public void Create(Staff staff)
         {
-            var id = _dataContext.Staff.Add(staff);
+            var id = _dataContext.Staff.Add(staff);              
             _dataContext.SaveChanges();
         }
 
@@ -44,14 +45,23 @@ namespace ABAPAI.Infra.Repositories
         public Staff GetById(string id)
         {
             return _dataContext
-                .Staff
+                .Staff.Include(x=>x.Address)
                 .FirstOrDefault(x => x.Id.ToString() == id);
         }
 
         public void Update(Staff staff)
         {
-            _dataContext.Entry(staff).State = EntityState.Modified;
-            _dataContext.SaveChanges();
+            try
+            {
+                _dataContext.Entry(staff).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var erro = e.Message;
+                var t = 0;
+            }
+            
         }
     }
 }

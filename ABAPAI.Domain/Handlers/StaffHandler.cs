@@ -7,6 +7,7 @@ using ABAPAI.Domain.Interfaces.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Handlers
@@ -64,14 +65,13 @@ namespace ABAPAI.Domain.Handlers
                     false);
 
                 staff.hashPassword();
-
-
+                staff.Address = new AddressTemplate(staff.Id);
                 _staffRepository.Create(staff);
 
                 return new GenericCommandResult(
                         true,
                         $"Staff {staff.Name} criado com sucesso!",
-                        new { identificador = staff.Id }
+                        new { id = staff.Id }
                         );
             });
 
@@ -121,7 +121,7 @@ namespace ABAPAI.Domain.Handlers
                     );
 
                 staff.hashPassword();
-
+                staff.Address = new AddressTemplate(staff.Id);
                 _staffRepository.Create(staff);
 
                 return new GenericCommandResult(
@@ -164,13 +164,21 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(
                     true,
                     "Autenticação feita com sucesso.",
-                    token
+                    new {
+                        user = new
+                        {
+                            id = token,
+                            name = staff.Name,
+                            image = staff.Image.ConvertAddressImageToURLAzureBlob()
+                        }
+                    }
                     );
             });
         }
 
         public async Task<ICommandResult> Handle(UpdateStaffCommand command)
         {
+
             command.Validate();
             if (command.Invalid)
                 return new GenericCommandResult(false, "Staff não está valido!", command.Notifications);
@@ -189,24 +197,33 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
+            var t = command.Image.IsBase64String();
             //Update Image - AZURE STORANGE BLOB
-            if (!string.IsNullOrEmpty(command.Image))
-            {   
-                
-                bool sucess = await _fileUpload.UpdateImageAsync(command.Image, staff.Image);
-                if (!sucess)
+            if (!string.IsNullOrEmpty(command.Image) && t)
+            {
+                if (string.IsNullOrEmpty(staff.Image))
                 {
-                    command.AddNotification("Image", "Erro ao atualizar a image");
-                    return new GenericCommandResult(
-                                false,
-                                "Staff não atualizado.",
-                                command.Notifications
-                            );
+                    staff.changeImage(await _fileUpload.UploadBase64ImageAsync(command.Image));                    
                 }
+                else
+                {
+
+                    bool isImageUpdate = await _fileUpload.UpdateImageAsync(command.Image, staff.Image.Replace("https://abnerdev.blob.core.windows.net/abapai/", ""));
+                    if (!isImageUpdate)
+                    {
+                        command.AddNotification("Image", "Erro ao atualizar a image");
+                        return new GenericCommandResult(
+                                    false,
+                                    "Staff não atualizado.",
+                                    command.Notifications
+                                );
+                    }
+                }
+                               
             }
 
             //Update STAFF
-            staff.UpdateStaff(command.Name, command.Name_user, command.Description, command.DDD, command.Phone, command.Image);
+            staff.UpdateStaff(command.Name, command.Name_user, command.Description, command.DDD, command.Phone, staff.Image);
 
             //Update Address
             var addressTemplate = new AddressTemplate(command.Address, command.City, command.Postal_code, command.Country, command.Number, staff.Id);

@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ABAPAI.Domain.Utils
 {
@@ -23,6 +24,18 @@ namespace ABAPAI.Domain.Utils
             }
         }
 
+        public static string ConvertAddressImageToURLAzureBlob(this string image)
+        {
+            if (string.IsNullOrEmpty(image))
+            {
+                return "https://abnerdev.blob.core.windows.net/abapai/{image}";
+            }
+            else
+            {
+                return image;
+            }
+            
+        }
         public static string GetHash(this string password)
         {
             UnicodeEncoding unicodeEncoding = new UnicodeEncoding();
@@ -57,6 +70,12 @@ namespace ABAPAI.Domain.Utils
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+        public static bool IsBase64String(this string image)
+        {
+            
+            return Regex.IsMatch(image, @"^data:image\/[a-z]+;base64,", RegexOptions.None);
+
         }
     }
 }
