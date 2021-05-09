@@ -199,7 +199,7 @@ namespace ABAPAI.Domain.Handlers
 
             
             //Update Image - AZURE STORANGE BLOB
-            if (!string.IsNullOrEmpty(command.Image) && command.Image.IsBase64String();)
+            if (!string.IsNullOrEmpty(command.Image) && command.Image.IsBase64String())
             {
                 if (string.IsNullOrEmpty(staff.Image))
                 {
