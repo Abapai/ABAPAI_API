@@ -197,9 +197,9 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            var t = command.Image.IsBase64String();
+            
             //Update Image - AZURE STORANGE BLOB
-            if (!string.IsNullOrEmpty(command.Image) && t)
+            if (!string.IsNullOrEmpty(command.Image) && command.Image.IsBase64String();)
             {
                 if (string.IsNullOrEmpty(staff.Image))
                 {
