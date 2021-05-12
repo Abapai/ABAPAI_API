@@ -28,7 +28,7 @@ namespace ABAPAI.Domain.Utils
         {
             if (string.IsNullOrEmpty(image))
             {
-                return "https://abnerdev.blob.core.windows.net/abapai/{image}";
+                return "https://abnerdev.blob.core.windows.net/abapai/imagepadrao.jpg";
             }
             else
             {

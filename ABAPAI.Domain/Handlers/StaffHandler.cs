@@ -201,13 +201,15 @@ namespace ABAPAI.Domain.Handlers
             //Update Image - AZURE STORANGE BLOB
             if (!string.IsNullOrEmpty(command.Image) && command.Image.IsBase64String())
             {
+
                 if (string.IsNullOrEmpty(staff.Image))
                 {
+                    //Adicionar foto
                     staff.changeImage(await _fileUpload.UploadBase64ImageAsync(command.Image));                    
                 }
                 else
                 {
-
+                    //Atualizar foto
                     bool isImageUpdate = await _fileUpload.UpdateImageAsync(command.Image, staff.Image.Replace("https://abnerdev.blob.core.windows.net/abapai/", ""));
                     if (!isImageUpdate)
                     {
@@ -231,7 +233,7 @@ namespace ABAPAI.Domain.Handlers
 
             _staffRepository.Update(staff);
 
-            return new GenericCommandResult(true, "Staff salvo.", staff);
+            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso"});
         }
     }
 

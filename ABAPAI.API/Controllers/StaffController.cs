@@ -48,10 +48,17 @@ namespace ABAPAI.API.Controllers
         }
 
         [Route("name_user/{name_user}")]
+        [AllowAnonymous]
+        [Authorize]
 
         public ActionResult<bool> ExistName_user(string name_user, [FromServices] IStaffRepository staffRepository)
         {
-            return Ok(!staffRepository.ExistName_user(name_user));
+            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (idUser is null)
+            {
+                return Ok(!staffRepository.ExistName_user(name_user));
+            }            
+            return Ok(!staffRepository.ExistName_userById(idUser, name_user));
         }
 
         
