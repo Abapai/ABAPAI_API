@@ -33,7 +33,7 @@ namespace ABAPAI.Tests.HandlerTests
                fakeStaff.Address.Address,
                fakeStaff.Address.City,
                fakeStaff.Address.Postal_code,
-               fakeStaff.Address.Country,
+               fakeStaff.Address.State,
                fakeStaff.Address.Number
                 );
             updateStaffCommand.UpdateId(fakeStaff.Id.ToString());
@@ -59,7 +59,7 @@ namespace ABAPAI.Tests.HandlerTests
                fakeStaff.Address.Address,
                fakeStaff.Address.City,
                fakeStaff.Address.Postal_code,
-               fakeStaff.Address.Country,
+               fakeStaff.Address.State,
                fakeStaff.Address.Number
                 );
 

@@ -41,6 +41,7 @@ namespace ABAPAI.API.Controllers
                 phone = staff.Phone,
                 address = staff.Address?.Address,
                 city = staff.Address?.City,
+                state = staff.Address?.State,
                 number = staff.Address?.Number,
                 postal_code = staff.Address?.Postal_code
             };

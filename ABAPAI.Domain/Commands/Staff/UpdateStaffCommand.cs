@@ -8,7 +8,7 @@ namespace ABAPAI.Domain.Commands.Staff
     {
         public UpdateStaffCommand() { }
 
-        public UpdateStaffCommand(string name, string name_user, string description, string dDD, string phone, string address, string city, string postal_code, string country, int? number)
+        public UpdateStaffCommand(string name, string name_user, string description, string dDD, string phone, string address, string city, string postal_code, string state, int? number)
         {
             Name = name;
             Name_user = name_user;
@@ -18,7 +18,7 @@ namespace ABAPAI.Domain.Commands.Staff
             Address = address;
             City = city;
             Postal_code = postal_code;
-            Country = country;
+            State = state;
             Number = number;
         }
 
@@ -33,7 +33,7 @@ namespace ABAPAI.Domain.Commands.Staff
         public string Address { get;  set; }
         public string City { get;  set; }
         public string Postal_code { get;  set; }
-        public string Country { get;  set; }
+        public string State { get;  set; }
         public int? Number { get;  set; }        
 
         public void UpdateId(string id)

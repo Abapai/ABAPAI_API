@@ -228,12 +228,12 @@ namespace ABAPAI.Domain.Handlers
             staff.UpdateStaff(command.Name, command.Name_user, command.Description, command.DDD, command.Phone, staff.Image);
 
             //Update Address
-            var addressTemplate = new AddressTemplate(command.Address, command.City, command.Postal_code, command.Country, command.Number, staff.Id);
+            var addressTemplate = new AddressTemplate(command.Address, command.City, command.Postal_code, command.State, command.Number, staff.Id);
             staff.Address.UpdateAddress(addressTemplate);
 
             _staffRepository.Update(staff);
 
-            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso"});
+            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso",image= staff.Image,name=staff.Name });
         }
     }
 

@@ -35,11 +35,10 @@ namespace ABAPAI.Infra.Contexts
 
             modelBuilder.Entity<AddressTemplate>().ToTable("Address");
             modelBuilder.Entity<AddressTemplate>().HasKey(x => x.Id_address);
-            modelBuilder.Entity<AddressTemplate>().Property(x => x.Country).HasColumnType("varchar(50)");
+            modelBuilder.Entity<AddressTemplate>().Property(x => x.State).HasColumnType("varchar(3)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.Address).HasColumnType("varchar(150)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.City).HasColumnType("varchar(70)");
             modelBuilder.Entity<AddressTemplate>().Property(x => x.Postal_code).HasColumnType("varchar(50)");
-            modelBuilder.Entity<AddressTemplate>().Property(x => x.Country).HasColumnType("varchar(50)");
             //modelBuilder.Entity<AddressTemplate>().Property(x => x.Id_user).HasColumnType("varchar(50)");         
             modelBuilder.Entity<Staff>().HasOne(x => x.Address).WithOne(y => y.Staff).HasForeignKey<AddressTemplate>(y => y.Id_user);
 

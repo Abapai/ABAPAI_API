@@ -7,12 +7,12 @@ namespace ABAPAI.Domain.Entities
     {
 
 
-        public AddressTemplate(string address, string city, string postal_code, string country, int? number, Guid id_user)
+        public AddressTemplate(string address, string city, string postal_code, string state, int? number, Guid id_user)
         {
             Address = address;
             City = city;
             Postal_code = postal_code;
-            Country = country;
+            State = state;
             Number = number;
             Id_address = Guid.NewGuid();
             Id_user = id_user;
@@ -29,7 +29,7 @@ namespace ABAPAI.Domain.Entities
         public string Address { get; private set; }
         public string City { get; private set; }
         public string Postal_code { get; private set; }
-        public string Country { get; private set; }
+        public string State { get; private set; }
         public int? Number { get; private set; }
 
         public void UpdateAddress(AddressTemplate template)
@@ -46,9 +46,9 @@ namespace ABAPAI.Domain.Entities
             {
                 this.Postal_code = template.Postal_code;
             }
-            if (template.Country.IsValid())
+            if (template.State.IsValid())
             {
-                this.Country = template.Country;
+                this.State = template.State;
             }
             if (template.Number.IsValid())
             {

@@ -17,6 +17,7 @@ namespace ABAPAI.Domain.DTO
         public string address { get; set; }
         public string postal_code { get; set; }
         public string city { get; set; }
+        public string state { get; set; }
         public int? number { get; set; }
         
         public string cpf { get; set; }
