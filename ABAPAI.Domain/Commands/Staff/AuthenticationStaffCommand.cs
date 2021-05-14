@@ -24,8 +24,9 @@ namespace ABAPAI.Domain.Commands.Staff
             AddNotifications(
                 new Contract()
                 .Requires()
-                .IsEmailOrEmpty(Email, "Email", "E-mail inválido.")
-                .IsNotNullOrEmpty(Password, "Password", "Password não pode estar nula.")
+                .IsEmailOrEmpty(Email, "email", "E-mail inválido.")
+                .IsNotNullOrEmpty(Email,"email","E-mail é obrigatório")
+                .IsNotNullOrEmpty(Password, "Password", "Não pode estar nula.")
                 );
         }
     }

@@ -7,6 +7,7 @@ using ABAPAI.Domain.Interfaces.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -41,10 +42,14 @@ namespace ABAPAI.Domain.Handlers
                         );
                 }
 
-                bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
-                if (existUserName)
+                IEnumerable<string> existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
+                if (existUserName is not null)
                 {
-                    command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
+                    foreach(string label in existUserName)
+                    {
+                        command.AddNotification(label, $"Já existe usuário com este {label}");
+                    }
+                    
                     return new GenericCommandResult(
                         false,
                         "Staff não criada, operação inválida",
@@ -92,11 +97,16 @@ namespace ABAPAI.Domain.Handlers
                         command.Notifications
                         );
                 }
-
-                bool existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
-                if (existUserName)
+            
+                
+                IEnumerable<string> existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
+                if (existUserName is not null)
                 {
-                    command.AddNotification("Name_user ou Email ou CNPJ", "Já existe usuário com este campo");
+                    foreach (string label in existUserName)
+                    {
+                        command.AddNotification(label, $"Já existe usuário com este {label}");
+                    }
+
                     return new GenericCommandResult(
                         false,
                         "Staff não criada, operação inválida",

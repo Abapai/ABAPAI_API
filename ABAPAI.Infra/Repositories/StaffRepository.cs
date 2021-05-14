@@ -3,6 +3,7 @@ using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ABAPAI.Infra.Repositories
@@ -22,9 +23,33 @@ namespace ABAPAI.Infra.Repositories
             _dataContext.SaveChanges();
         }
 
-        public bool ExistName_user(string name_user, string email, string cpf_cnpj)
+        public IEnumerable<string> ExistName_user(string name_user, string email, string cpf_cnpj)
         {
-            return _dataContext.Staff.Any(x => x.Name_user == name_user || x.Name == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj);
+           var staff = _dataContext.Staff.FirstOrDefault(x => x.Name_user == name_user || x.Name == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj);
+           if(staff is not null)
+            {
+                var labels= new List<string>();
+                if (staff.Name_user == name_user)
+                {
+                    labels.Add("name_user");
+                }
+                if (staff.Email == email)
+                {
+                    labels.Add("email");
+                }
+                if (staff.CPF == cpf_cnpj)
+                {
+                     labels.Add("CPF");
+               }
+                if(staff.CNPJ == "CNPJ")
+                {
+                    labels.Add("CNPJ");
+                }
+
+                return labels.AsEnumerable();
+            }
+            return null;
+           
         }
 
         public bool ExistName_user(string name_user)

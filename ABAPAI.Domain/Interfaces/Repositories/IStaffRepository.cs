@@ -1,4 +1,5 @@
 ﻿using ABAPAI.Domain.Entities;
+using System.Collections.Generic;
 
 namespace ABAPAI.Domain.Interfaces.Repositories
 {
@@ -6,7 +7,7 @@ namespace ABAPAI.Domain.Interfaces.Repositories
     {
         void Create(Staff staff);
 
-        bool ExistName_user(string name_user, string email, string cpf_cnpj);
+        IEnumerable<string> ExistName_user(string name_user, string email, string cpf_cnpj);
 
         bool ExistName_user(string name_user);
 

@@ -28,9 +28,9 @@ namespace ABAPAI.Tests.Repositories
 
         }
 
-        public bool ExistName_user(string name_user, string email, string cpf_cnpj)
+        public IEnumerable<string> ExistName_user(string name_user, string email, string cpf_cnpj)
         {
-            return false;
+            return null;
         }
 
         public bool ExistName_user(string name_user)
