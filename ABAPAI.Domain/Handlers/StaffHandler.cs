@@ -37,7 +37,7 @@ namespace ABAPAI.Domain.Handlers
                 {
                     return new GenericCommandResult(
                         false,
-                        "Staff não criada, operação inválida",
+                        "Por favor, preencha os campos corretamente",
                         command.Notifications
                         );
                 }
@@ -52,7 +52,7 @@ namespace ABAPAI.Domain.Handlers
                     
                     return new GenericCommandResult(
                         false,
-                        "Staff não criada, operação inválida",
+                        "Por favor, preencha os campos corretamente",
                         command.Notifications
                         );
                 }
@@ -93,7 +93,7 @@ namespace ABAPAI.Domain.Handlers
                 {
                     return new GenericCommandResult(
                         false,
-                        "Staff não criada, operação inválida",
+                        "Por favor, preencha os campos corretamente",
                         command.Notifications
                         );
                 }
@@ -109,7 +109,7 @@ namespace ABAPAI.Domain.Handlers
 
                     return new GenericCommandResult(
                         false,
-                        "Staff não criada, operação inválida",
+                        "Por favor, preencha os campos corretamente",
                         command.Notifications
                         );
                 }
@@ -199,7 +199,7 @@ namespace ABAPAI.Domain.Handlers
 
             if (existName_user)
             {
-                command.AddNotification("Name_user", "Já existe usuário com este campo");
+                command.AddNotification("name_user", "Já existe usuário com este campo");
                 return new GenericCommandResult(
                     false,
                     "Staff não atualizado.",
@@ -223,7 +223,7 @@ namespace ABAPAI.Domain.Handlers
                     bool isImageUpdate = await _fileUpload.UpdateImageAsync(command.Image, staff.Image.Replace("https://abnerdev.blob.core.windows.net/abapai/", ""));
                     if (!isImageUpdate)
                     {
-                        command.AddNotification("Image", "Erro ao atualizar a image");
+                        command.AddNotification("image", "Erro ao atualizar a image.");
                         return new GenericCommandResult(
                                     false,
                                     "Staff não atualizado.",
