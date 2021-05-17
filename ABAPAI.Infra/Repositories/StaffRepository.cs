@@ -25,7 +25,7 @@ namespace ABAPAI.Infra.Repositories
 
         public IEnumerable<string> ExistName_user(string name_user, string email, string cpf_cnpj)
         {
-           var staff = _dataContext.Staff.FirstOrDefault(x => x.Name_user == name_user || x.Name == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj);
+            var staff = _dataContext.Staff.AsNoTracking().FirstOrDefault(x => x.Name_user == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj || x.Email == email);                
            if(staff is not null)
             {
                 var labels= new List<string>();
