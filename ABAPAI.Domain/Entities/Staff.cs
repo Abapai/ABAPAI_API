@@ -12,7 +12,7 @@ namespace ABAPAI.Domain.Entities
         {
             Name_user = name_user;
             Name = name;
-            Email = email;
+            Email = email.ToLower();
             Password = password;
             Role = role;
             CPF = cPF;
