@@ -41,7 +41,7 @@ namespace ABAPAI.Infra.Repositories
                 {
                      labels.Add("CPF");
                }
-                if(staff.CNPJ == "CNPJ")
+                if(staff.CNPJ == cpf_cnpj)
                 {
                     labels.Add("CNPJ");
                 }
