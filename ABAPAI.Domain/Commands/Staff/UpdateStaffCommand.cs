@@ -46,8 +46,8 @@ namespace ABAPAI.Domain.Commands.Staff
             AddNotifications(
                 new Contract()
                .Requires()
-               .IsNotNullOrEmpty(Name, "Name", "Name não pode estar nulo.")
-               .IsNotNullOrEmpty(Name_user, "Name_user", "Name_user não pode estar nulo.")
+               .IsNotNullOrEmpty(Name, "name", "Deve ser obrigatório.")
+               .IsNotNullOrEmpty(Name_user, "name_user", "Deve ser obrigatório.")
             );
         }
     }

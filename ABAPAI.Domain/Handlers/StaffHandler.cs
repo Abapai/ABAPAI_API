@@ -243,7 +243,7 @@ namespace ABAPAI.Domain.Handlers
 
             _staffRepository.Update(staff);
 
-            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso",image= staff.Image,name=staff.Name });
+            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso",image= staff.Image.ConvertAddressImageToURLAzureBlob(),name=staff.Name });
         }
     }
 
