@@ -63,10 +63,12 @@ namespace ABAPAI.Domain.Commands.Event
                  .IsNotNull(EventCategory, "eventcategory", "Não pode estar nula.")
                  .IsNotNull(ValueEvent, "valueevent", "Não pode estar nula.")
                  .IsNotNull(Quantity, "quantity", "Não pode estar nula.")
-                 .IsNotNull(publicLimit, "publiclimit", "Não pode estar nula.")
+                 .IsNotNull(PublicLimit, "publiclimit", "Não pode estar nula.")
                  .IsNotNull(DDD, "ddd", "Não pode estar nula.")
                  .IsNotNullOrEmpty(Phone, "phone", "Não pode estar nula.")
                  );
+
+            
         }
     }
 }
