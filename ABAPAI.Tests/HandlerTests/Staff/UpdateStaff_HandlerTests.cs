@@ -4,16 +4,13 @@ using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Utils;
 using ABAPAI.Tests.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Tests.HandlerTests
 {
     [TestClass]
     public class UpdateStaff_HandlerTests
     {
-        public static FakeStaffRepository _fakeStaffRepository = new FakeStaffRepository();        
+        public static FakeStaffRepository _fakeStaffRepository = new FakeStaffRepository();
         private readonly StaffHandler _staffHandler = new StaffHandler(_fakeStaffRepository, new FakeFileUploadRepository());
         private GenericCommandResult _result = new GenericCommandResult();
         private readonly AuthenticationStaffCommand _userValid = new AuthenticationStaffCommand("abnerm80@gmail.com", "abner123");
@@ -21,9 +18,9 @@ namespace ABAPAI.Tests.HandlerTests
         [TestMethod]
         public void Dado_um_name_user_invalido_parar_a_execucao()
         {
-            
-            var fakeStaff = _fakeStaffRepository.FindStaff("abnerm80@gmail.com", "abner123".GetHash());           
-            
+
+            var fakeStaff = _fakeStaffRepository.FindStaff("abnerm80@gmail.com", "abner123".GetHash());
+
             UpdateStaffCommand updateStaffCommand = new UpdateStaffCommand(
                fakeStaff.Name,
                "jhonatan_med",
@@ -38,8 +35,8 @@ namespace ABAPAI.Tests.HandlerTests
                 );
             updateStaffCommand.UpdateId(fakeStaff.Id.ToString());
 
-            _result = (GenericCommandResult) _staffHandler.Handle(updateStaffCommand).Result;
-            
+            _result = (GenericCommandResult)_staffHandler.Handle(updateStaffCommand).Result;
+
             Assert.AreEqual(_result.Success, false);
         }
 
@@ -48,7 +45,7 @@ namespace ABAPAI.Tests.HandlerTests
         {
             const string email = "abnerm80@gmail.com";
             string password = "abner123".GetHash();
-            var fakeStaff = _fakeStaffRepository.FindStaff(email,password);
+            var fakeStaff = _fakeStaffRepository.FindStaff(email, password);
 
             UpdateStaffCommand updateStaffCommand = new UpdateStaffCommand(
                fakeStaff.Name,
@@ -65,7 +62,7 @@ namespace ABAPAI.Tests.HandlerTests
 
             updateStaffCommand.UpdateId(fakeStaff.Id.ToString());
 
-            _result = (GenericCommandResult) _staffHandler.Handle(updateStaffCommand).Result;
+            _result = (GenericCommandResult)_staffHandler.Handle(updateStaffCommand).Result;
 
             var fakeStaffUpdated = _fakeStaffRepository.FindStaff(email, password);
             Assert.AreEqual(_result.Success, true);

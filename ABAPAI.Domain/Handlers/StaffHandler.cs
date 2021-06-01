@@ -8,7 +8,6 @@ using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Flunt.Notifications;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ABAPAI.Domain.Handlers
@@ -29,58 +28,58 @@ namespace ABAPAI.Domain.Handlers
 
         public async Task<ICommandResult> Handle(CreateStaff_CPF_Command command)
         {
-           return await Task.Run(() =>
-            {
-                command.Validate();
+            return await Task.Run(() =>
+             {
+                 command.Validate();
 
-                if (command.Invalid)
-                {
-                    return new GenericCommandResult(
-                        false,
-                        "Por favor, preencha os campos corretamente",
-                        command.Notifications
-                        );
-                }
+                 if (command.Invalid)
+                 {
+                     return new GenericCommandResult(
+                         false,
+                         "Por favor, preencha os campos corretamente",
+                         command.Notifications
+                         );
+                 }
 
-                IEnumerable<string> existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
-                if (existUserName is not null)
-                {
-                    foreach(string label in existUserName)
-                    {
-                        command.AddNotification(label, $"Já existe usuário com este {label}");
-                    }
-                    
-                    return new GenericCommandResult(
-                        false,
-                        "Por favor, preencha os campos corretamente",
-                        command.Notifications
-                        );
-                }
+                 IEnumerable<string> existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CPF);
+                 if (existUserName is not null)
+                 {
+                     foreach (string label in existUserName)
+                     {
+                         command.AddNotification(label, $"Já existe usuário com este {label}");
+                     }
+
+                     return new GenericCommandResult(
+                         false,
+                         "Por favor, preencha os campos corretamente",
+                         command.Notifications
+                         );
+                 }
 
 
-                var staff = new Staff(
-                    command.name_user,
-                    command.name,
-                    command.email,
-                    command.password,
-                    Roles.STAFF,
-                    command.CPF,
-                    null,
-                    null,
-                    false);
+                 var staff = new Staff(
+                     command.name_user,
+                     command.name,
+                     command.email,
+                     command.password,
+                     Roles.STAFF,
+                     command.CPF,
+                     null,
+                     null,
+                     false);
 
-                staff.hashPassword();
-                staff.Address = new AddressTemplate(staff.Id);
-                _staffRepository.Create(staff);
+                 staff.hashPassword();
+                 staff.Address = new AddressTemplate(staff.Id);
+                 _staffRepository.Create(staff);
 
-                return new GenericCommandResult(
-                        true,
-                        $"Staff {staff.Name} criado com sucesso!",
-                        new { id = staff.Id }
-                        );
-            });
+                 return new GenericCommandResult(
+                         true,
+                         $"Staff {staff.Name} criado com sucesso!",
+                         new { id = staff.Id }
+                         );
+             });
 
-            
+
         }
 
         public async Task<ICommandResult> Handle(CreateStaff_CNPJ_Command command)
@@ -97,8 +96,8 @@ namespace ABAPAI.Domain.Handlers
                         command.Notifications
                         );
                 }
-            
-                
+
+
                 IEnumerable<string> existUserName = _staffRepository.ExistName_user(command.name_user, command.email, command.CNPJ);
                 if (existUserName is not null)
                 {
@@ -174,7 +173,8 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(
                     true,
                     "Autenticação feita com sucesso.",
-                    new {
+                    new
+                    {
                         user = new
                         {
                             id = token,
@@ -207,7 +207,7 @@ namespace ABAPAI.Domain.Handlers
                     );
             }
 
-            
+
             //Update Image - AZURE STORANGE BLOB
             if (!string.IsNullOrEmpty(command.Image) && command.Image.IsBase64String())
             {
@@ -215,7 +215,7 @@ namespace ABAPAI.Domain.Handlers
                 if (string.IsNullOrEmpty(staff.Image))
                 {
                     //Adicionar foto
-                    staff.changeImage(await _fileUpload.UploadBase64ImageAsync(command.Image));                    
+                    staff.changeImage(await _fileUpload.UploadBase64ImageAsync(command.Image));
                 }
                 else
                 {
@@ -231,7 +231,7 @@ namespace ABAPAI.Domain.Handlers
                                 );
                     }
                 }
-                               
+
             }
 
             //Update STAFF
@@ -243,7 +243,7 @@ namespace ABAPAI.Domain.Handlers
 
             _staffRepository.Update(staff);
 
-            return new GenericCommandResult(true, "Staff salvo.", new { message="Staff atualizado com sucesso",image= staff.Image.ConvertAddressImageToURLAzureBlob(),name=staff.Name });
+            return new GenericCommandResult(true, "Staff salvo.", new { message = "Staff atualizado com sucesso", image = staff.Image.ConvertAddressImageToURLAzureBlob(), name = staff.Name });
         }
     }
 

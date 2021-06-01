@@ -19,16 +19,16 @@ namespace ABAPAI.Infra.Repositories
 
         public void Create(Staff staff)
         {
-            var id = _dataContext.Staff.Add(staff);              
+            var id = _dataContext.Staff.Add(staff);
             _dataContext.SaveChanges();
         }
 
         public IEnumerable<string> ExistName_user(string name_user, string email, string cpf_cnpj)
         {
-            var staff = _dataContext.Staff.AsNoTracking().FirstOrDefault(x => x.Name_user == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj || x.Email == email);                
-           if(staff is not null)
+            var staff = _dataContext.Staff.AsNoTracking().FirstOrDefault(x => x.Name_user == name_user || x.CPF == cpf_cnpj || x.CNPJ == cpf_cnpj || x.Email == email);
+            if (staff is not null)
             {
-                var labels= new List<string>();
+                var labels = new List<string>();
                 if (staff.Name_user == name_user)
                 {
                     labels.Add("name_user");
@@ -39,9 +39,9 @@ namespace ABAPAI.Infra.Repositories
                 }
                 if (staff.CPF == cpf_cnpj)
                 {
-                     labels.Add("CPF");
-               }
-                if(staff.CNPJ == cpf_cnpj)
+                    labels.Add("CPF");
+                }
+                if (staff.CNPJ == cpf_cnpj)
                 {
                     labels.Add("CNPJ");
                 }
@@ -49,7 +49,7 @@ namespace ABAPAI.Infra.Repositories
                 return labels.AsEnumerable();
             }
             return null;
-           
+
         }
 
         public bool ExistName_user(string name_user)
@@ -70,7 +70,7 @@ namespace ABAPAI.Infra.Repositories
         public Staff GetById(string id)
         {
             return _dataContext
-                .Staff.Include(x=>x.Address)
+                .Staff.Include(x => x.Address)
                 .FirstOrDefault(x => x.Id.ToString() == id);
         }
 
@@ -86,7 +86,7 @@ namespace ABAPAI.Infra.Repositories
                 var erro = e.Message;
                 var t = 0;
             }
-            
+
         }
     }
 }

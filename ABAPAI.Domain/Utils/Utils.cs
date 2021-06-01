@@ -34,7 +34,7 @@ namespace ABAPAI.Domain.Utils
             {
                 return image;
             }
-            
+
         }
         public static string GetHash(this string password)
         {
@@ -73,7 +73,7 @@ namespace ABAPAI.Domain.Utils
         }
         public static bool IsBase64String(this string image)
         {
-            
+
             return Regex.IsMatch(image, @"^data:image\/[a-z]+;base64,", RegexOptions.None);
 
         }

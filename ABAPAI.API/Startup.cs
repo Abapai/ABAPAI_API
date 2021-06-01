@@ -31,9 +31,12 @@ namespace ABAPAI.API
         {
             services.AddControllers();
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SQL_SERVER")));
-            services.AddScoped<StaffHandler, StaffHandler>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IFileUpload>(x => new FileUpload(Configuration.GetConnectionString("NAME_CONTAINER"), Configuration.GetConnectionString("KEY_AZURE_BLOB")));
+
+            services.AddScoped<Event_Handler, Event_Handler>();
+            services.AddScoped<StaffHandler, StaffHandler>();
 
             services.AddAuthentication()
                 .AddJwtBearer(Roles.STAFF.ToString(), x =>
@@ -63,10 +66,18 @@ namespace ABAPAI.API
                     .Build());
             });
 
-            services.AddSwaggerGen(c => //adicionando o Swagger
+            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Abapai API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ToDo API",
+                    Description = "A simple example ASP.NET Core Web API",
+
+                });
             });
+
+
 
         }
 
@@ -80,11 +91,24 @@ namespace ABAPAI.API
 
             app.UseHttpsRedirection();
 
-            app.UseSwagger(); //Utilizando o Swagger
-            app.UseSwaggerUI(c => //utilizando o Swagger UI(Ferramenta Visual) 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Abapai API");
+                c.SerializeAsV2 = true;
             });
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ABAPAI API");
+                c.RoutePrefix = string.Empty;
+            });
+#if DEBUG
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+#endif
+
 
             app.UseRouting();
 

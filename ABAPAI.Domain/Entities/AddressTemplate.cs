@@ -59,5 +59,8 @@ namespace ABAPAI.Domain.Entities
         public Guid Id_user { get; private set; }
         public virtual Staff Staff { get; private set; }
 
+        public Guid? Id_event { get; private set; }
+        public virtual Event Event { get; private set; }
+
     }
 }
