@@ -96,7 +96,7 @@ namespace ABAPAI.Infra.Repositories
             }
             catch
             {
-                return false;                
+                return false;
             }
         }
     }

@@ -46,16 +46,16 @@ namespace ABAPAI.Tests.HandlerTests
         [TestMethod]
         public void dado_um_staff_invalido_deve_interroper_execucao()
         {
-            _result = (GenericCommandResult) _staffHandler.Handle(_createStaffCommand_invalid).Result;
+            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_invalid).Result;
             Assert.AreEqual(_result.Success, false);
-            _result = (GenericCommandResult) _staffHandler.Handle(_createStaffCommand_invalid2).Result;
+            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_invalid2).Result;
             Assert.AreEqual(_result.Success, false);
         }
 
         [TestMethod]
         public void dado_um_staff_valido_deve_cadastrar()
         {
-            _result = (GenericCommandResult) _staffHandler.Handle(_createStaffCommand_valid).Result;
+            _result = (GenericCommandResult)_staffHandler.Handle(_createStaffCommand_valid).Result;
             Assert.AreEqual(_result.Success, true);
         }
     }

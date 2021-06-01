@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ABAPAI.Domain.DTO
+﻿namespace ABAPAI.Domain.DTO
 {
     public class DTOStaff_Profile
     {
@@ -11,7 +7,7 @@ namespace ABAPAI.Domain.DTO
         public string image { get; set; }
         public string name { get; set; }
         public string name_user { get; set; }
-        public string  description { get; set; }
+        public string description { get; set; }
         public string ddd { get; set; }
         public string phone { get; set; }
         public string address { get; set; }
@@ -19,7 +15,7 @@ namespace ABAPAI.Domain.DTO
         public string city { get; set; }
         public string state { get; set; }
         public int? number { get; set; }
-        
+
         public string cpf { get; set; }
         public string cnpj { get; set; }
         public string stateRegistration { get; set; }

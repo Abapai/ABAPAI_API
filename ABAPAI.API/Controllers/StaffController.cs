@@ -6,7 +6,6 @@ using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Domain.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,12 +18,12 @@ namespace ABAPAI.API.Controllers
     {
 
         #region GET
-        
+
         [HttpGet]
         [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
         public ActionResult<DTOStaff_Profile> GetStaff([FromServices] IStaffRepository staffRepository)
         {
-            var id_staff= User.Claims.FirstOrDefault(x=> x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var staff = staffRepository.GetById(id_staff);
             return new DTOStaff_Profile
             {
@@ -36,7 +35,7 @@ namespace ABAPAI.API.Controllers
                 cpf = staff.CPF,
                 cnpj = staff.CNPJ,
                 stateRegistration = staff.StateRegistration,
-                free = (bool)staff.Free,                
+                free = (bool)staff.Free,
                 ddd = staff.DDD,
                 phone = staff.Phone,
                 address = staff.Address?.Address,
@@ -45,7 +44,7 @@ namespace ABAPAI.API.Controllers
                 number = staff.Address?.Number,
                 postal_code = staff.Address?.Postal_code
             };
-            
+
         }
 
         [Route("name_user/{name_user}")]
@@ -58,11 +57,11 @@ namespace ABAPAI.API.Controllers
             if (idUser is null)
             {
                 return Ok(!staffRepository.ExistName_user(name_user));
-            }            
+            }
             return Ok(!staffRepository.ExistName_userById(idUser, name_user));
         }
 
-        
+
 
         #endregion
 
@@ -74,7 +73,7 @@ namespace ABAPAI.API.Controllers
             [FromBody] AuthenticationStaffCommand command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult) await staffHandler.Handle(command);
+            var result = (GenericCommandResult)await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Ok(result);
@@ -89,7 +88,7 @@ namespace ABAPAI.API.Controllers
             [FromBody] CreateStaff_CPF_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult) await staffHandler.Handle(command);
+            var result = (GenericCommandResult)await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Created("", result);
@@ -104,7 +103,7 @@ namespace ABAPAI.API.Controllers
             [FromBody] CreateStaff_CNPJ_Command command,
             [FromServices] StaffHandler staffHandler)
         {
-            var result = (GenericCommandResult) await staffHandler.Handle(command);
+            var result = (GenericCommandResult)await staffHandler.Handle(command);
             if (result.Success)
             {
                 return Ok(result);
@@ -119,11 +118,11 @@ namespace ABAPAI.API.Controllers
         #region PUT
         [HttpPut]
         [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
-        public async Task<ActionResult<GenericCommandResult>>PutStaff([FromBody]UpdateStaffCommand updateStaffCommand,[FromServices] StaffHandler staffHandler)
+        public async Task<ActionResult<GenericCommandResult>> PutStaff([FromBody] UpdateStaffCommand updateStaffCommand, [FromServices] StaffHandler staffHandler)
         {
             var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             updateStaffCommand.UpdateId(id_staff);
-            var result = (GenericCommandResult) await staffHandler.Handle(updateStaffCommand);
+            var result = (GenericCommandResult)await staffHandler.Handle(updateStaffCommand);
             if (result.Success)
             {
                 return Ok(result);

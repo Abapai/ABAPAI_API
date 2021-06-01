@@ -2,8 +2,8 @@
 {
     public enum Roles
     {
-        STAFF = 0,
-        FAN = 1,
-        PROVIDER_SERVICE = 2,
+        STAFF = 1,
+        FAN = 2,
+        PROVIDER_SERVICE = 3,
     }
 }

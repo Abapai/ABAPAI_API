@@ -1,5 +1,6 @@
 ﻿using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Utils;
+using System.Collections.Generic;
 
 namespace ABAPAI.Domain.Entities
 {
@@ -38,7 +39,7 @@ namespace ABAPAI.Domain.Entities
             DDD = dDD;
             Phone = phone;
             Image = image;
-            
+
         }
 
         #endregion
@@ -74,6 +75,8 @@ namespace ABAPAI.Domain.Entities
         public string Phone { get; private set; }
 
         public string Image { get; private set; }
+
+        public virtual List<Event> Events { get; set; }
 
         #endregion
 
