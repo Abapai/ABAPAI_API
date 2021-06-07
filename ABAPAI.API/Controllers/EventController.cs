@@ -54,5 +54,16 @@ namespace ABAPAI.API.Controllers
         }
         #endregion
 
+        [Route("")]
+        [HttpPut]
+        public GenericCommandResult Update(
+            [FromBody] UpdateEventCommand command,
+            [FromServices] Event_Handler handler
+        )
+        {
+            command.User = "testeUser";
+            return (GenericCommandResult)handler.Handle(command);
+        }
+
     }
 }
