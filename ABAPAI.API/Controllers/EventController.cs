@@ -39,7 +39,7 @@ namespace ABAPAI.API.Controllers
         [HttpGet]
         [Route("listAdmin")]
         [Authorize]
-        public async Task<ActionResult<List<DTOEventListSimple>>> ListAdminEvent([FromServices] IEventRepository eventRepository)
+        public  ActionResult<List<DTOEventListSimple>> ListAdminEvent([FromServices] IEventRepository eventRepository)
         {
             var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
@@ -49,7 +49,8 @@ namespace ABAPAI.API.Controllers
             {
                 list.Add(new DTOEventListSimple(x.Id,x.Image, x.Title));
             });
-            return list;         
+
+            return Ok(list);         
         }
         #endregion
 
