@@ -30,5 +30,12 @@ namespace ABAPAI.Infra.Repositories
             var EventsList = _dataContext.Event.Where(x => x.Staff_ForeignKey.ToString() == id_staff);
             return EventsList;
         }
+
+        public Event GetById(Guid id)
+        {
+            return _dataContext
+                .Event
+                .FirstOrDefault(x => x.Id == id);
+        }
     }
 }
