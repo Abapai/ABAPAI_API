@@ -1,6 +1,7 @@
 ﻿using ABAPAI.Domain.Entities;
 using ABAPAI.Domain.Interfaces.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ABAPAI.Tests.Repositories
@@ -17,6 +18,11 @@ namespace ABAPAI.Tests.Repositories
             return  Task.Run(()=> {
                 return true;            
             });
+        }
+
+        public IEnumerable<Event> GetAllEvents(string id_staff)
+        {
+            throw new NotImplementedException();
         }
     }
 }
