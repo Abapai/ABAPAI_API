@@ -1,6 +1,7 @@
 ﻿using ABAPAI.Domain.Entities;
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,12 @@ namespace ABAPAI.Infra.Repositories
             return _dataContext
                 .Event
                 .FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Update(Event @event)
+        {
+            _dataContext.Entry(@event).State = EntityState.Modified;
+            _dataContext.SaveChanges();
         }
     }
 }
