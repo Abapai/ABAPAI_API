@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABAPAI.Infra.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210601003204_v1")]
+    [Migration("20210603203950_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace ABAPAI.Infra.Migrations
                     b.Property<Guid?>("Id_event")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id_user")
+                    b.Property<Guid?>("Id_user")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Number")
@@ -55,7 +55,8 @@ namespace ABAPAI.Infra.Migrations
                         .HasFilter("[Id_event] IS NOT NULL");
 
                     b.HasIndex("Id_user")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Id_user] IS NOT NULL");
 
                     b.ToTable("Address");
                 });
@@ -256,9 +257,7 @@ namespace ABAPAI.Infra.Migrations
 
                     b.HasOne("ABAPAI.Domain.Entities.Staff", "Staff")
                         .WithOne("Address")
-                        .HasForeignKey("ABAPAI.Domain.Entities.AddressTemplate", "Id_user")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ABAPAI.Domain.Entities.AddressTemplate", "Id_user");
 
                     b.Navigation("Event");
 

@@ -1,4 +1,5 @@
 ﻿using ABAPAI.Domain.Commands;
+using ABAPAI.Domain.Commands.Address;
 using ABAPAI.Domain.Commands.Event;
 using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Utils;
@@ -11,13 +12,14 @@ namespace ABAPAI.Tests.HandlerTests.Event
     [TestClass]
     public class CreateEventCommand_HandlerTests
     {
-        private Event_Handler _event_Handler = new Event_Handler(new FakeFileUploadRepository(), new FakeEventRepository());
-        private readonly CreateEventCommand _createEventCommand_valid
-            = new CreateEventCommand("data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/7QB8UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAF8cAigAWkZCT", "title", "descrição minha", DateTime.Now.AddDays(3), DateTime.Now.AddDays(6), 1, 1, true, 100,10, 41, "991238262", "instagram", "www.");
+        private Event_Handler _event_Handler = new Event_Handler(new FakeFileUploadRepository(), new FakeEventRepository());      
+        
+        CreateEventCommand _createEventCommand_valid
+            = new CreateEventCommand("data:image/jpeg;bse64,/9j/4AAQSkZJRgABAgAAAQABAAD/7QB8UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAF8cAigAWkZCT", "title", "descrição minha", DateTime.Now.AddDays(3), DateTime.Now.AddDays(6), 1, 1, true, 100,10,true, 41, "991238262", "instagram", "www.", new CreateAddressCommand("Rua malta", "Fazenda rio grande", "83823202", "PR", 200));
 
 
         private readonly CreateEventCommand _createEventCommand_invalid
-           = new CreateEventCommand("data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/7QB8UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAF8cAigAWkZCT", "title", "descrição minha", DateTime.Now.AddDays(3), DateTime.Now.AddDays(6), 1, 1, true, 0,10, 41, "991238262", "instagram", "www.");
+           = new CreateEventCommand("data:image/jpeg;bse64,/9j/4AAQSkZJRgABAgAAAQABAAD/7QB8UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAF8cAigAWkZCT", "title", "descrição minha", DateTime.Now.AddDays(3), DateTime.Now.AddDays(6), 1, 1, true, 100, 0, true, 41, "991238262", "instagram", "www.", new CreateAddressCommand("Rua malta", "Fazenda rio grande", "83823202", "PR", 200));
 
         private readonly FakeStaffRepository _fakeStaffRepository = new FakeStaffRepository();
         const string email = "abnerm80@gmail.com";

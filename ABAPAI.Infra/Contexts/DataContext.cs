@@ -16,6 +16,9 @@ namespace ABAPAI.Infra.Contexts
         public DbSet<Staff> Staff { get; set; }
         public DbSet<AddressTemplate> addressTemplates { get; set; }
 
+        public DbSet<Event> Event { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region STAFF
@@ -59,7 +62,8 @@ namespace ABAPAI.Infra.Contexts
             modelBuilder.Entity<Event>().Property(x => x.ValueEvent).HasConversion(x => x.ToString(), x => (ValueEvent)Enum.Parse(typeof(ValueEvent), x)).IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.DDD).HasColumnType("varchar(3)").IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.Phone).HasColumnType("varchar(10)").IsRequired();
-            modelBuilder.Entity<Event>().Property(x => x.URL).HasColumnType("varchar(300)").IsRequired();
+            modelBuilder.Entity<Event>().Property(x => x.Name_url).HasColumnType("varchar(60)");
+            modelBuilder.Entity<Event>().Property(x => x.URL).HasColumnType("varchar(300)");
             modelBuilder.Entity<Event>().HasOne(x => x.staff).WithMany(b => b.Events).HasForeignKey(x => x.Staff_ForeignKey);
             #endregion
 

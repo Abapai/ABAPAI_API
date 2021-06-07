@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ABAPAI.Infra.Migrations
 {
@@ -91,7 +91,7 @@ namespace ABAPAI.Infra.Migrations
                     Postal_code = table.Column<string>(type: "varchar(50)", nullable: true),
                     State = table.Column<string>(type: "varchar(3)", nullable: true),
                     Number = table.Column<int>(type: "int", nullable: true),
-                    Id_user = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id_user = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Id_event = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -108,7 +108,7 @@ namespace ABAPAI.Infra.Migrations
                         column: x => x.Id_user,
                         principalTable: "Staff",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,7 +150,8 @@ namespace ABAPAI.Infra.Migrations
                 name: "IX_Address_Id_user",
                 table: "Address",
                 column: "Id_user",
-                unique: true);
+                unique: true,
+                filter: "[Id_user] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_Staff_ForeignKey",

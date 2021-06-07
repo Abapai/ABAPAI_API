@@ -30,6 +30,7 @@ namespace ABAPAI.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SQL_SERVER")));
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
