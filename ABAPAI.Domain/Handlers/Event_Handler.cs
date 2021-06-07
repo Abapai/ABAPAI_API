@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace ABAPAI.Domain.Handlers
 {
     public class Event_Handler : Notifiable,
-        IHandler<CreateEventCommand>
+        IHandler<CreateEventCommand>,
+        IHandler<UpdateEventCommand>
     {
         private readonly IFileUpload _fileUpload;
         private readonly IEventRepository _eventRepository;
@@ -120,6 +121,23 @@ namespace ABAPAI.Domain.Handlers
             return new GenericCommandResult(false, $"Evento não criado.");
 
 
+        }
+
+        public ICommandResult Handle(UpdateEventCommand command)
+        {
+            command.Validate();
+            if (command.Invalid)
+                return new GenericCommandResult(false, "Evento está errado!", command.Notifications);
+
+            var event = _eventRepository.GetById();
+
+
+            return new GenericCommandResult(true, "Evento salvo.", event);
+        }
+
+        Task<ICommandResult> IHandler<UpdateEventCommand>.Handle(UpdateEventCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }
