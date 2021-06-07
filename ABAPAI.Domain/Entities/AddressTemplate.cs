@@ -9,14 +9,24 @@ namespace ABAPAI.Domain.Entities
 
         public AddressTemplate(string address, string city, string postal_code, string state, int? number, Guid id_user)
         {
+            Id_address = Guid.NewGuid();
             Address = address;
             City = city;
             Postal_code = postal_code;
             State = state;
             Number = number;
-            Id_address = Guid.NewGuid();
             Id_user = id_user;
 
+        }
+
+        public AddressTemplate(string address, string city, string postal_code, string state, int? number)
+        {
+            Id_address = Guid.NewGuid();
+            Address = address;
+            City = city;
+            Postal_code = postal_code;
+            State = state;
+            Number = number;
         }
 
         public AddressTemplate(Guid id_user)
@@ -55,8 +65,7 @@ namespace ABAPAI.Domain.Entities
                 this.Number = template.Number;
             }
         }
-
-        public Guid Id_user { get; private set; }
+        public Guid? Id_user { get; private set; }
         public virtual Staff Staff { get; private set; }
 
         public Guid? Id_event { get; private set; }

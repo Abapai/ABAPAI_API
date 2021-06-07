@@ -76,16 +76,10 @@ namespace ABAPAI.Infra.Repositories
 
         public void Update(Staff staff)
         {
-            try
-            {
+            
                 _dataContext.Entry(staff).State = EntityState.Modified;
                 _dataContext.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                var erro = e.Message;
-                var t = 0;
-            }
+            
 
         }
     }

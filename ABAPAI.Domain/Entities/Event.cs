@@ -6,7 +6,7 @@ namespace ABAPAI.Domain.Entities
 {
     public class Event : Entity
     {
-        public Event(string image, string title, string description, DateTime dateTimeStart, DateTime dateTimeEnd, EventCategory eventCategory, ValueEvent valueEvent, double price, bool publicLimit, int quantity, int dDD, string phone, string name_url, string uRL, bool emitQrCode, Guid staff_ForeignKey)
+        public Event(string image, string title, string description, DateTime dateTimeStart, DateTime dateTimeEnd, EventCategory eventCategory, ValueEvent valueEvent, double price, bool publicLimit, int? quantity, int dDD, string phone, string name_url, string uRL, bool emitQrCode, Guid staff_ForeignKey)
         {
             Image = image;
             Title = title;
@@ -55,7 +55,7 @@ namespace ABAPAI.Domain.Entities
         public ValueEvent ValueEvent { get; private set; }
         public double Price { get; private set; }
         public bool PublicLimit { get; private set; }
-        public int Quantity { get; private set; }
+        public int? Quantity { get; private set; }
         public int DDD { get; private set; }
         public string Phone { get; private set; }
         public string Name_url { get; private set; }

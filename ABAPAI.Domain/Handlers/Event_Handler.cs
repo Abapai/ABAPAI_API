@@ -27,8 +27,14 @@ namespace ABAPAI.Domain.Handlers
         public async Task<ICommandResult> Handle(CreateEventCommand command)
         {
             command.Validate();
+            
             if (command.Invalid)
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
+
+            command.Address.Validate();
+            if (command.Address.Invalid)
+                return new GenericCommandResult(false, "Evento não está valido!", command.Address.Notifications);
+
 
             if (Enum.IsDefined(typeof(EventCategory), command.EventCategory) is false)
             {
@@ -56,14 +62,27 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(false, "Data inválida", command.Notifications);
             }
 
+            if((EventCategory)command.EventCategory == EventCategory.Live && (string.IsNullOrEmpty(command.Name_url) || string.IsNullOrEmpty(command.URL)))
+            {
+                command.AddNotification("name_url", "é obrigatório");
+                command.AddNotification("url", "é obrigatório");
+                return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
+            }
+
+            if(command.PublicLimit.Value && command.Quantity.HasValue is false)
+            {
+                command.AddNotification("quantity", "é obrigatório");
+                return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
+            }
+
             if (command.Image.IsBase64String() is false)
             {
                 return new GenericCommandResult(false, "Image deve ser base64", command.Notifications);
             }
 
-            var id_image = await _fileUpload.UploadBase64ImageAsync(command.Image);
+            
 
-
+            var id_image = await _fileUpload.UploadBase64ImageAsync(command.Image);      
 
             var @event = new Event(id_image,
                                    command.Title,
@@ -74,7 +93,7 @@ namespace ABAPAI.Domain.Handlers
                                    (ValueEvent)command.ValueEvent.Value,
                                    0,
                                    command.PublicLimit.Value,
-                                   command.Quantity.Value,
+                                   command.Quantity,
                                    command.DDD.Value,
                                    command.Phone,
                                    command.Name_url,
@@ -83,9 +102,23 @@ namespace ABAPAI.Domain.Handlers
                                    Guid.Parse(command.Id_user)
                                    );
 
-            var id_event = _eventRepository.Create(@event);
+            var address = new AddressTemplate(command.Address.Address_name,
+                                              command.Address.City,
+                                              command.Address.Postal_code,
+                                              command.Address.State,
+                                              command.Address.Number.Value
+                                              );
 
-            return new GenericCommandResult(true, $"Evento criado com sucesso. ID: {id_event}.");
+            @event.Address = address;
+            var isSaveSuccess = await _eventRepository.CreateAsync(@event);
+
+            if (isSaveSuccess)
+            {
+                return new GenericCommandResult(true, $"Evento criado com sucesso.", new { id_event = @event.Id});
+            }
+
+            return new GenericCommandResult(false, $"Evento não criado.");
+
 
         }
     }
