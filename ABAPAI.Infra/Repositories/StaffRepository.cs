@@ -2,7 +2,6 @@
 using ABAPAI.Domain.Interfaces.Repositories;
 using ABAPAI.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -76,10 +75,10 @@ namespace ABAPAI.Infra.Repositories
 
         public void Update(Staff staff)
         {
-            
-                _dataContext.Entry(staff).State = EntityState.Modified;
-                _dataContext.SaveChanges();
-            
+
+            _dataContext.Entry(staff).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+
 
         }
     }

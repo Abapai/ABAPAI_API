@@ -32,17 +32,18 @@ namespace ABAPAI.Infra.Repositories
             return EventsList;
         }
 
-        public Event GetById(Guid id)
+        public Event GetById(string id_user, string id_event)
         {
             return _dataContext
                 .Event
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(x => x.Id.ToString() == id_event && x.Staff_ForeignKey.ToString() == id_user);
         }
 
-        public void Update(Event @event)
+        public async Task<bool> UpdateAsync(Event @event)
         {
             _dataContext.Entry(@event).State = EntityState.Modified;
-            _dataContext.SaveChanges();
+            var status = await _dataContext.SaveChangesAsync();
+            return Convert.ToBoolean(status);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ABAPAI.API.Controllers
     {
 
         #region POST
-        [HttpPost]        
+        [HttpPost]
         [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
         public async Task<ActionResult<GenericCommandResult>> CreateEvent([FromBody] CreateEventCommand command, [FromServices] Event_Handler eventHandler)
         {
@@ -39,29 +39,33 @@ namespace ABAPAI.API.Controllers
         [HttpGet]
         [Route("listAdmin")]
         [Authorize]
-        public  ActionResult<List<DTOEventListSimple>> ListAdminEvent([FromServices] IEventRepository eventRepository)
+        public ActionResult<List<DTOEventListSimple>> ListAdminEvent([FromServices] IEventRepository eventRepository)
         {
             var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            var eventList = eventRepository.GetAllEvents(id_staff).OrderBy(x=>x.DateTimeStart).ToList();
+            var eventList = eventRepository.GetAllEvents(id_staff).OrderBy(x => x.DateTimeStart).ToList();
             var list = new List<DTOEventListSimple>();
             eventList.ForEach(x =>
             {
-                list.Add(new DTOEventListSimple(x.Id,x.Image, x.Title));
+                list.Add(new DTOEventListSimple(x.Id, x.Image, x.Title));
             });
 
-            return Ok(list);         
+            return Ok(list);
         }
         #endregion
 
-        [Route("")]
+        [Route("{id_event}")]
         [HttpPut]
+        [Authorize(Policy = "JWT_STAFF", Roles = "STAFF")]
         public GenericCommandResult Update(
             [FromBody] UpdateEventCommand command,
-            [FromServices] Event_Handler handler
+            [FromServices] Event_Handler handler,
+            string id_event
         )
         {
-            command.User = "testeUser";
+            var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            command.UpdateId(id_staff, id_event);
             return (GenericCommandResult)handler.Handle(command);
         }
 

@@ -10,5 +10,9 @@ namespace ABAPAI.Domain.Interfaces.Repositories
 
         IEnumerable<Event> GetAllEvents(string id_staff);
 
+        Event GetById(string id_user, string id_event);
+
+        Task<bool> UpdateAsync(Event @event);
+
     }
 }

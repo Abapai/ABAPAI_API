@@ -15,8 +15,9 @@ namespace ABAPAI.Tests.Repositories
 
         public Task<bool> CreateAsync(Event @event)
         {
-            return  Task.Run(()=> {
-                return true;            
+            return Task.Run(() =>
+            {
+                return true;
             });
         }
 

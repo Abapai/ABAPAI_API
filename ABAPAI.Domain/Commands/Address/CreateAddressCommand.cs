@@ -1,9 +1,6 @@
 ﻿using ABAPAI.Domain.Interfaces.Commands;
 using Flunt.Notifications;
 using Flunt.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABAPAI.Domain.Commands.Address
 {
@@ -22,11 +19,11 @@ namespace ABAPAI.Domain.Commands.Address
             Number = number;
         }
 
-        public string Address_name { get;  set; }
-        public string City { get;  set; }
-        public string Postal_code { get;  set; }
-        public string State { get;  set; }
-        public int? Number { get;  set; }
+        public string Address_name { get; set; }
+        public string City { get; set; }
+        public string Postal_code { get; set; }
+        public string State { get; set; }
+        public int? Number { get; set; }
 
         public void Validate()
         {
@@ -41,7 +38,7 @@ namespace ABAPAI.Domain.Commands.Address
                  .IsNotNullOrEmpty(State, "state", status)
                  .IsNotNull(Number, "number", status)
                  .HasMaxLen(State, 3, "state", "Máximo 3 caracteres. Exemplo: PR")
-                 ); 
+                 );
 
         }
     }

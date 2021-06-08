@@ -42,9 +42,9 @@ namespace ABAPAI.Domain.Commands.Event
         public int? EventCategory { get; set; }
         public int? ValueEvent { get; set; }
         public bool? PublicLimit { get; set; }
-        public double? Price { get;  set; }
+        public double? Price { get; set; }
         public int? Quantity { get; set; }
-        public bool EmitQrCode { get;  set; }
+        public bool EmitQrCode { get; set; }
 
 
         public int? DDD { get; set; }
@@ -60,7 +60,7 @@ namespace ABAPAI.Domain.Commands.Event
         {
             this.Id_user = id;
         }
-        
+
 
         public void Validate()
         {
@@ -79,7 +79,7 @@ namespace ABAPAI.Domain.Commands.Event
                  .IsNotNull(DDD, "ddd", status)
                  .IsNotNullOrEmpty(Phone, "phone", status)
                  .IsNotNullOrEmpty(Address.ToString(), "address", status)
-                 );            
+                 );
         }
     }
 }

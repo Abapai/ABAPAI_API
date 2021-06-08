@@ -1,4 +1,5 @@
 ﻿using ABAPAI.Domain.Enums;
+using ABAPAI.Domain.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -71,5 +72,44 @@ namespace ABAPAI.Domain.Entities
 
         public virtual AddressTemplate Address { get; set; }
         #endregion
+
+        public void Update(string image, string title, string description, DateTime dateTimeStart, DateTime dateTimeEnd, EventCategory eventCategory, ValueEvent valueEvent, double price, bool publicLimit, int quantity, int dDD, string phone, string name_url, string uRL, bool emitQrCode)
+        {
+            if (image.IsValid())
+            {
+                Image = image;
+            }
+
+            if (title.IsValid())
+            {
+                Title = title;
+            }
+
+            if (description.IsValid())
+            {
+                Description = description;
+            }
+
+            if (dateTimeStart.IsValid())
+            {
+                DateTimeStart = dateTimeStart;
+            }
+
+            if (dateTimeEnd.IsValid())
+            {
+                DateTimeEnd = dateTimeEnd;
+            }
+
+            if (Enum.IsDefined(typeof(EventCategory), eventCategory))
+            {
+                EventCategory = eventCategory;
+            }
+
+            if (Enum.IsDefined(typeof(ValueEvent), valueEvent))
+            {
+                ValueEvent = valueEvent;
+            }
+        }
     }
+
 }

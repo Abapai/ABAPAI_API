@@ -28,7 +28,7 @@ namespace ABAPAI.Domain.Handlers
         public async Task<ICommandResult> Handle(CreateEventCommand command)
         {
             command.Validate();
-            
+
             if (command.Invalid)
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
 
@@ -52,8 +52,8 @@ namespace ABAPAI.Domain.Handlers
             {
                 return new GenericCommandResult(false, "Quantity deve ter uma quantidade, porque o publicLimit está ativado", command.Notifications);
             }
-            
-            if((ValueEvent)command.ValueEvent == ValueEvent.Monetizado && command.Price <= 0)
+
+            if ((ValueEvent)command.ValueEvent == ValueEvent.Monetizado && command.Price <= 0)
             {
                 return new GenericCommandResult(false, "ValueEvent é Monetizado e o valor esta menor ou igual a 0", command.Notifications);
             }
@@ -63,14 +63,14 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(false, "Data inválida", command.Notifications);
             }
 
-            if((EventCategory)command.EventCategory == EventCategory.Live && (string.IsNullOrEmpty(command.Name_url) || string.IsNullOrEmpty(command.URL)))
+            if ((EventCategory)command.EventCategory == EventCategory.Live && (string.IsNullOrEmpty(command.Name_url) || string.IsNullOrEmpty(command.URL)))
             {
                 command.AddNotification("name_url", "é obrigatório");
                 command.AddNotification("url", "é obrigatório");
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
             }
 
-            if(command.PublicLimit.Value && command.Quantity.HasValue is false)
+            if (command.PublicLimit.Value && command.Quantity.HasValue is false)
             {
                 command.AddNotification("quantity", "é obrigatório");
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
@@ -81,9 +81,9 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(false, "Image deve ser base64", command.Notifications);
             }
 
-            
 
-            var id_image = await _fileUpload.UploadBase64ImageAsync(command.Image);      
+
+            var id_image = await _fileUpload.UploadBase64ImageAsync(command.Image);
 
             var @event = new Event(id_image,
                                    command.Title,
@@ -115,7 +115,7 @@ namespace ABAPAI.Domain.Handlers
 
             if (isSaveSuccess)
             {
-                return new GenericCommandResult(true, $"Evento criado com sucesso.", new { id_event = @event.Id});
+                return new GenericCommandResult(true, $"Evento criado com sucesso.", new { id_event = @event.Id });
             }
 
             return new GenericCommandResult(false, $"Evento não criado.");
@@ -123,21 +123,23 @@ namespace ABAPAI.Domain.Handlers
 
         }
 
-        public ICommandResult Handle(UpdateEventCommand command)
+        public async Task<ICommandResult> Handle(UpdateEventCommand command)
         {
             command.Validate();
             if (command.Invalid)
                 return new GenericCommandResult(false, "Evento está errado!", command.Notifications);
 
-            var event = _eventRepository.GetById();
+            var @event = _eventRepository.GetById(command.Id_user, command.Id_event);
 
+            @event.Update(command.Image, command.Title, command.Description, command.DateTimeStart.Value, command.DateTimeEnd.Value, (EventCategory)command.EventCategory, (ValueEvent)command.ValueEvent, command.Price.Value, command.PublicLimit.Value, command.Quantity.Value, command.DDD.Value, command.Phone, command.Name_url, command.URL, command.EmitQrCode);
 
-            return new GenericCommandResult(true, "Evento salvo.", event);
-        }
+            var isSaveSuccess = await _eventRepository.UpdateAsync(@event);
 
-        Task<ICommandResult> IHandler<UpdateEventCommand>.Handle(UpdateEventCommand command)
-        {
-            throw new NotImplementedException();
+            if (isSaveSuccess)
+                return new GenericCommandResult(true, "Evento salvo.", @event);
+
+            return new GenericCommandResult(false, "Não foi possível salvar evento.");
         }
     }
+
 }
