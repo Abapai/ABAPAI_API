@@ -47,7 +47,7 @@ namespace ABAPAI.Domain.Handlers
             }
 
 
-            if (command.Quantity <= 0 && command.PublicLimit.Value)
+            if (command.Quantity <= 0 && command.PublicLimit.GetValueOrDefault())
             {
                 return new GenericCommandResult(false, "Quantity deve ter uma quantidade, porque o publicLimit está ativado", command.Notifications);
             }
@@ -69,7 +69,7 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
             }
 
-            if(command.PublicLimit.Value && command.Quantity.HasValue is false)
+            if(command.PublicLimit.GetValueOrDefault() && command.Quantity.HasValue is false)
             {
                 command.AddNotification("quantity", "é obrigatório");
                 return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
@@ -80,21 +80,23 @@ namespace ABAPAI.Domain.Handlers
                 return new GenericCommandResult(false, "Image deve ser base64", command.Notifications);
             }
 
+            //convert date's to utc Brazil                       
+            command.DateTimeStart = command.DateTimeStart.GetValueOrDefault().AddHours(-3);
+            command.DateTimeEnd = command.DateTimeEnd.GetValueOrDefault().AddHours(-3);
             
-
             var id_image = await _fileUpload.UploadBase64ImageAsync(command.Image);      
 
             var @event = new Event(id_image,
                                    command.Title,
                                    command.Description,
-                                   command.DateTimeStart.Value,
-                                   command.DateTimeEnd.Value,
-                                   (EventCategory)command.EventCategory.Value,
-                                   (ValueEvent)command.ValueEvent.Value,
+                                   command.DateTimeStart.GetValueOrDefault(),
+                                   command.DateTimeEnd.GetValueOrDefault(),
+                                   (EventCategory)command.EventCategory.GetValueOrDefault(),
+                                   (ValueEvent)command.ValueEvent.GetValueOrDefault(),
                                    0,
-                                   command.PublicLimit.Value,
+                                   command.PublicLimit.GetValueOrDefault(),
                                    command.Quantity,
-                                   command.DDD.Value,
+                                   command.DDD.GetValueOrDefault(),
                                    command.Phone,
                                    command.Name_url,
                                    command.URL,
@@ -106,7 +108,7 @@ namespace ABAPAI.Domain.Handlers
                                               command.Address.City,
                                               command.Address.Postal_code,
                                               command.Address.State,
-                                              command.Address.Number.Value
+                                              command.Address.Number.GetValueOrDefault()
                                               );
 
             @event.Address = address;
