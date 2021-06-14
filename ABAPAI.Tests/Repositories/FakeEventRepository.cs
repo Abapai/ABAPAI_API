@@ -8,6 +8,11 @@ namespace ABAPAI.Tests.Repositories
 {
     public class FakeEventRepository : IEventRepository
     {
+        public int CountByEvent(string id_staff, int? category)
+        {
+            throw new NotImplementedException();
+        }
+
         public string Create(Event @event)
         {
             return Guid.NewGuid().ToString();

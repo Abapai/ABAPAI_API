@@ -1,6 +1,7 @@
 ﻿using ABAPAI.Domain.Commands;
 using ABAPAI.Domain.Commands.Event;
 using ABAPAI.Domain.DTO;
+using ABAPAI.Domain.Enums;
 using ABAPAI.Domain.Handlers;
 using ABAPAI.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -37,20 +38,22 @@ namespace ABAPAI.API.Controllers
 
         #region GET
         [HttpGet]
-        [Route("listAdmin")]
+        [Route("listAdmin/{page}/{limit}")]
         [Authorize]
-        public  ActionResult<List<DTOEventListSimple>> ListAdminEvent([FromServices] IEventRepository eventRepository)
+        public  ActionResult<List<DTOPaginationEventListAdmin>> ListAdminEvent([FromServices] IEventRepository eventRepository,int page,int limit,int? category)
         {
             var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            var eventList = eventRepository.GetAllEvents(id_staff).OrderBy(x=>x.DateTimeStart).ToList();
+            var count = eventRepository.CountByEvent(id_staff,category);
+            var eventList = eventRepository.GetAllEvents(id_staff).OrderBy(x=>x.DateTimeStart).Where(x => x.EventCategory == (category.HasValue?(EventCategory)category:x.EventCategory) ).Skip((page - 1) * limit).Take(limit).ToList();
             var list = new List<DTOEventListSimple>();
             eventList.ForEach(x =>
             {
-                list.Add(new DTOEventListSimple(x.Id,x.Image, x.Title));
+                list.Add(new DTOEventListSimple(x.Id,x.Image, x.Title,x.EventCategory,x.DateTimeStart,x.ValueEvent,x.PublicLimit,x.Quantity.GetValueOrDefault(),10));
             });
 
-            return Ok(list);         
+            var obj = new DTOPaginationEventListAdmin(count,limit,list);
+
+            return Ok(obj);         
         }
         #endregion
 
