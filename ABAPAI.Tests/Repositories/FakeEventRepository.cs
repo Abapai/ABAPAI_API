@@ -30,6 +30,11 @@ namespace ABAPAI.Tests.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Event> GetAllEvents()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Event> GetEventById(string id_event)
         {
             throw new NotImplementedException();
