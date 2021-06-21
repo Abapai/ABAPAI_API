@@ -29,15 +29,19 @@ namespace ABAPAI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
 
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SQL_SERVER")));
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IFileUpload>(x => new FileUpload(Configuration.GetConnectionString("NAME_CONTAINER"), Configuration.GetConnectionString("KEY_AZURE_BLOB")));
 
             services.AddScoped<Event_Handler, Event_Handler>();
             services.AddScoped<StaffHandler, StaffHandler>();
+            services.AddScoped<TicketHandler, TicketHandler>();
+
 
             services.AddAuthentication()
                 .AddJwtBearer(Roles.STAFF.ToString(), x =>

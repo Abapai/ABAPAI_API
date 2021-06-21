@@ -44,6 +44,27 @@ namespace ABAPAI.Domain.Entities
             URL = uRL;
             EmitQrCode = emitQrCode;
             Staff_ForeignKey = Guid.Parse(staff_ForeignKey);
+
+        }
+        public Event(string image, string title, string description, DateTime dateTimeStart, DateTime dateTimeEnd, EventCategory eventCategory, ValueEvent valueEvent, double price, bool publicLimit, int quantity, int dDD, string phone, string name_url, string uRL, bool emitQrCode, string staff_ForeignKey, int quantityConfirmed)
+        {
+            Image = image;
+            Title = title;
+            Description = description;
+            DateTimeStart = dateTimeStart;
+            DateTimeEnd = dateTimeEnd;
+            EventCategory = eventCategory;
+            ValueEvent = valueEvent;
+            Price = price;
+            PublicLimit = publicLimit;
+            Quantity = quantity;
+            DDD = dDD;
+            Phone = phone;
+            Name_url = name_url;
+            URL = uRL;
+            EmitQrCode = emitQrCode;
+            Staff_ForeignKey = Guid.Parse(staff_ForeignKey);
+            QuantityConfirmed = quantityConfirmed;
         }
 
         public string Image { get; private set; }
@@ -62,6 +83,8 @@ namespace ABAPAI.Domain.Entities
         public string URL { get; private set; }
         public bool EmitQrCode { get; private set; }
 
+        public int QuantityConfirmed { get; private set; }
+
 
         #region relation EF
         public Guid Staff_ForeignKey { get; set; }
@@ -71,5 +94,10 @@ namespace ABAPAI.Domain.Entities
 
         public virtual AddressTemplate Address { get; set; }
         #endregion
+
+        public void applyQuantityConfirmed()
+        {
+            QuantityConfirmed = QuantityConfirmed + 1;
+        }
     }
 }

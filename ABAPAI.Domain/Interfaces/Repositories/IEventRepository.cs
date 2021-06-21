@@ -10,8 +10,13 @@ namespace ABAPAI.Domain.Interfaces.Repositories
         Task<bool> CreateAsync(Event @event);
 
         IEnumerable<Event> GetAllEvents(string id_staff);
+        IEnumerable<Event> GetAllEvents();
 
         int CountByEvent(string id_staff,int? category);
+        Event GetEventWithAddressWithStaff(string id_staff);
 
+        Task<Event> GetEventById(string id_event );
+
+        public Task<bool> UpdateEvent(Event @event);
     }
 }

@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Event\NewFolder\" />
+    <Folder Include="Commands\NewFolder\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 

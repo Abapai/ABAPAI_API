@@ -29,5 +29,20 @@ namespace ABAPAI.Tests.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<Event> GetEventById(string id_event)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Event GetEventWithAddressWithStaff(string id_staff)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateEvent(Event @event)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
