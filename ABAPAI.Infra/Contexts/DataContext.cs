@@ -56,8 +56,8 @@ namespace ABAPAI.Infra.Contexts
             modelBuilder.Entity<Event>().Property(x => x.Title).HasColumnType("varchar(50)").IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.Description).HasColumnType("varchar(200)").IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.Image).HasColumnType("varchar(120)").IsRequired();
-            modelBuilder.Entity<Event>().Property(x => x.DateTimeStart).HasColumnType("Date").IsRequired();
-            modelBuilder.Entity<Event>().Property(x => x.DateTimeEnd).HasColumnType("Date").IsRequired();
+            modelBuilder.Entity<Event>().Property(x => x.DateTimeStart).IsRequired();
+            modelBuilder.Entity<Event>().Property(x => x.DateTimeEnd).IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.EventCategory).HasConversion(x => x.ToString(), x => (EventCategory)Enum.Parse(typeof(EventCategory), x)).IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.ValueEvent).HasConversion(x => x.ToString(), x => (ValueEvent)Enum.Parse(typeof(ValueEvent), x)).IsRequired();
             modelBuilder.Entity<Event>().Property(x => x.DDD).HasColumnType("varchar(3)").IsRequired();

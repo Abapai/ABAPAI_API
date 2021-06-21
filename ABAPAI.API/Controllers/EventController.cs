@@ -50,7 +50,7 @@ namespace ABAPAI.API.Controllers
             var list = new List<DTOEventListSimple>();
             eventList.ForEach(x =>
             {
-                list.Add(new DTOEventListSimple(x.Id, x.Image, x.Title, x.EventCategory, x.DateTimeStart, x.ValueEvent, x.PublicLimit, x.Quantity.GetValueOrDefault(), 10));
+                list.Add(new DTOEventListSimple(x.Id, x.Image, x.Title, x.EventCategory, x.DateTimeStart, x.ValueEvent, x.PublicLimit, x.Quantity.GetValueOrDefault(), x.QuantityConfirmed));
             });
 
             var obj = new DTOPaginationEventListAdmin(count, limit, list);
@@ -76,7 +76,7 @@ namespace ABAPAI.API.Controllers
         {
             var id_staff = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             
-            var eventList = eventRepository.GetAllEvents().OrderBy(x => x.DateTimeStart).Where(x => x.EventCategory ==  (EventCategory)category ).Skip((page - 1) * limit).Take(limit).ToList();
+            var eventList = eventRepository.GetAllEvents().OrderBy(x => x.DateTimeStart).Where(x => x.EventCategory ==  (EventCategory)category ).OrderBy(x=> x.DateTimeStart).Skip((page - 1) * limit).Take(limit).ToList();
             var list = new List<Event>();
             eventList.ForEach(x =>
             {
