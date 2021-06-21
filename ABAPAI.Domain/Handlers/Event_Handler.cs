@@ -72,12 +72,12 @@ namespace ABAPAI.Domain.Handlers
             if(command.PublicLimit.GetValueOrDefault() && command.Quantity.HasValue is false)
             {
                 command.AddNotification("quantity", "é obrigatório");
-                return new GenericCommandResult(false, "Evento não está valido!", command.Notifications);
+                return new GenericCommandResult(false, "Evento não está válido!", command.Notifications);
             }
 
             if (command.Image.IsBase64String() is false)
             {
-                return new GenericCommandResult(false, "Image deve ser base64", command.Notifications);
+                return new GenericCommandResult(false, "Imagem deve ser base64", command.Notifications);
             }
 
             //convert date's to utc Brazil                       
